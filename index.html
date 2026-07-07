@@ -331,16 +331,206 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   /* ============================================================
-     SECTION SKELETONS (content lands in phase 2)
+     CONTENT COMPONENTS
      ============================================================ */
   .card { padding: 30px 32px; }
-  .placeholder-note {
+
+  /* About */
+  .about-grid { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
+  .stats { display: grid; gap: 12px; }
+  .stat {
+    text-align: center;
+    padding: 14px 22px;
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .stat .num {
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: 1.3rem;
+    color: var(--warm);
+    letter-spacing: 0.08em;
+  }
+  .stat .lbl {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--text-low);
+    text-transform: uppercase;
+  }
+
+  /* Experience */
+  .xp-role {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-hi);
+  }
+  .xp-role .at { color: var(--warm); }
+  .xp-meta {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.16em;
+    color: var(--text-low);
+    text-transform: uppercase;
+    margin: 6px 0 16px;
+  }
+  ul.points { list-style: none; }
+  ul.points li { padding-left: 18px; position: relative; margin-bottom: 8px; font-size: 0.93rem; }
+  ul.points li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--warm);
+    font-family: var(--font-mono);
+  }
+  .xp-log { margin-top: 18px; display: grid; gap: 12px; }
+  .xp-log .log-entry {
+    padding: 16px 22px;
+    border-left: 2px solid var(--glass-border);
+  }
+  .log-entry .xp-role { font-size: 0.78rem; }
+  .log-entry .xp-meta { margin: 4px 0 6px; }
+  .log-entry p { font-size: 0.86rem; color: var(--text-mid); }
+
+  /* Projects */
+  .proj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+  .proj-card {
+    padding: 24px;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .proj-card:hover { transform: translateY(-4px); border-color: rgba(240, 176, 106, 0.35); }
+  .proj-cat {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    color: var(--warm);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .proj-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
     letter-spacing: 0.06em;
+    color: var(--text-hi);
+    margin-bottom: 8px;
+    line-height: 1.45;
+  }
+  .proj-card p { font-size: 0.86rem; margin-bottom: 14px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--text-low);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+
+  /* Skills */
+  .skill-groups { display: grid; gap: 22px; }
+  .skill-group h3 {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.24em;
+    color: var(--warm);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    color: var(--text-mid);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    padding: 6px 13px;
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .chip:hover { border-color: rgba(240, 176, 106, 0.4); color: var(--text-hi); }
+
+  /* Education */
+  .edu-entry { padding: 22px 26px; }
+  .edu-entry + .edu-entry { margin-top: 14px; }
+  .edu-head { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: space-between; }
+  .edu-head h3 {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    color: var(--text-hi);
+  }
+  .edu-date {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
     color: var(--text-low);
   }
-  .placeholder-note::before { content: "> "; color: var(--warm); }
+  .edu-entry .inst { font-size: 0.86rem; color: var(--text-mid); margin: 4px 0 10px; }
+  .badge {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--ok);
+    border: 1px solid rgba(134, 216, 165, 0.35);
+    border-radius: 4px;
+    padding: 3px 9px;
+    margin-right: 6px;
+    text-transform: uppercase;
+  }
+
+  /* Contact */
+  .contact-card { text-align: center; padding: 44px 32px; }
+  .contact-card .big {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    letter-spacing: 0.1em;
+    color: var(--text-hi);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .contact-card .sub { font-size: 0.92rem; margin-bottom: 24px; }
+  .contact-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    transition: transform 0.25s, background 0.25s, border-color 0.25s;
+  }
+  .btn svg { width: 15px; height: 15px; }
+  .btn-warm { color: #1a120a; background: var(--warm); }
+  .btn-warm:hover { transform: translateY(-2px); background: #f7c286; }
+  .btn-line { color: var(--text-hi); border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.04); }
+  .btn-line:hover { transform: translateY(-2px); border-color: rgba(240, 176, 106, 0.4); }
+  .langs {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+    color: var(--text-low);
+    text-transform: uppercase;
+  }
+  .langs span { border: 1px solid var(--glass-border); border-radius: 4px; padding: 4px 10px; }
+  .langs b { color: var(--text-mid); font-weight: 600; }
 
   footer {
     padding: 40px 0 70px;
@@ -360,6 +550,10 @@
     .scene-art { right: -18%; opacity: 0.6; }
     .window-glow { right: 2%; }
     section { padding: 44px 0; }
+    .about-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .stat { padding: 12px 8px; }
+    .contact-card { padding: 34px 20px; }
   }
 
 </style>
@@ -510,42 +704,190 @@
   <section id="about">
     <h2 class="section-title">About</h2>
     <div class="card glass">
-      <p class="placeholder-note">content lands in phase 2 — intro, UiTM Netcentric Computing, CGPA 3.81, Dean's List</p>
+      <div class="about-grid">
+        <div>
+          <p style="margin-bottom: 12px;">
+            I'm <strong style="color: var(--text-hi);">Izzah Khayreen Mahazan</strong>, a Netcentric
+            Computing student at Universiti Teknologi MARA with a strong passion for programming
+            languages and frameworks. I build across the stack — Laravel and Flutter apps,
+            MySQL-backed systems, and automated pipelines on AWS.
+          </p>
+          <p>
+            Beyond code, I've led a 60-student community outreach team as SULAM onsite leader —
+            I like shipping things carefully and working well with people while doing it.
+          </p>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="num">3.81</div><div class="lbl">CGPA</div></div>
+          <div class="stat"><div class="num">9×</div><div class="lbl">Dean's List</div></div>
+          <div class="stat"><div class="num">7+</div><div class="lbl">Projects</div></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="experience">
     <h2 class="section-title">Experience</h2>
     <div class="card glass">
-      <p class="placeholder-note">content lands in phase 2 — Bank Islam internship (AWS pipeline, Flutter BDC site) featured, earlier roles as compact log entries</p>
+      <h3 class="xp-role">Intern <span class="at">@ Bank Islam Malaysia Berhad</span></h3>
+      <p class="xp-meta">Apr 2026 — Present · Digital Transformation, Group Digital Division</p>
+      <ul class="points">
+        <li>Developed and managed an automated report generation pipeline using AWS Lambda, S3, EventBridge, and CloudWatch.</li>
+        <li>Built frontend features for the Money Changer Website (BDC) using Flutter.</li>
+      </ul>
+    </div>
+    <div class="xp-log">
+      <div class="log-entry glass">
+        <h3 class="xp-role">Intern <span class="at">@ Jabatan Pembangunan Kemahiran, KSM</span></h3>
+        <p class="xp-meta">Mar 2023 — Aug 2023 · Cyberjaya</p>
+        <p>Completed professional development workshops: Python (certified), Laravel, mobile development, and API development in collaboration with the Malaysian Qualifications Agency (MQA).</p>
+      </div>
+      <div class="log-entry glass">
+        <h3 class="xp-role">Retail Associate <span class="at">@ Parkson Corporation</span></h3>
+        <p class="xp-meta">Aug 2024 — Oct 2024</p>
+        <p>Customer assistance, cash handling, and accurate record-keeping in the Children &amp; Baby department.</p>
+      </div>
+      <div class="log-entry glass">
+        <h3 class="xp-role">Tearista <span class="at">@ Tealive Petronas Presint 9</span></h3>
+        <p class="xp-meta">Feb 2024 — Mar 2024</p>
+        <p>Beverage preparation and accurate handling of high-volume online orders.</p>
+      </div>
+      <div class="log-entry glass">
+        <h3 class="xp-role">Playschool Teacher <span class="at">@ Tadika Vonad Presint 9</span></h3>
+        <p class="xp-meta">Nov 2023 — Jan 2024</p>
+        <p>Created personalized learning materials and supported children with diverse needs, including autism.</p>
+      </div>
     </div>
   </section>
 
   <section id="projects">
     <h2 class="section-title">Projects</h2>
-    <div class="card glass">
-      <p class="placeholder-note">content lands in phase 2 — FYP credit exemption system, Melaka Tourism app, AI Study Mate, IoT smart dustbin, FSKM network design</p>
+    <div class="proj-grid">
+      <div class="proj-card glass">
+        <p class="proj-cat">Web · Final Year Project</p>
+        <h3>Secure Credit Exemption Management System</h3>
+        <p>Credit exemption management for UiTM with multifactor authentication (OTP &amp; email) and OCR document processing.</p>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">MFA</span><span class="tag">OCR</span></div>
+      </div>
+      <div class="proj-card glass">
+        <p class="proj-cat">Mobile</p>
+        <h3>Melaka Tourism Itinerary Assistant</h3>
+        <p>Attraction guide with Google Maps integration, itinerary saving and editing via Firestore, and Firebase Auth.</p>
+        <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Google Maps</span></div>
+      </div>
+      <div class="proj-card glass">
+        <p class="proj-cat">Mobile · AI</p>
+        <h3>AI Study Mate</h3>
+        <p>Study companion with OCR document scanning, voice-to-text, automated note summarization, flashcard generation, and exam tracking.</p>
+        <div class="tags"><span class="tag">Flutter</span><span class="tag">OCR</span><span class="tag">In-house API</span></div>
+      </div>
+      <div class="proj-card glass">
+        <p class="proj-cat">Web</p>
+        <h3>Homestay Management System</h3>
+        <p>Booking platform for guests with listing management for hosts.</p>
+        <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
+      </div>
+      <div class="proj-card glass">
+        <p class="proj-cat">IoT</p>
+        <h3>Smart Dustbin</h3>
+        <p>Motion-activated lid and full-bin notifications via the Blynk app, built on Arduino Uno and NodeMCU with an ultrasonic sensor.</p>
+        <div class="tags"><span class="tag">Arduino</span><span class="tag">NodeMCU</span><span class="tag">Blynk</span></div>
+      </div>
+      <div class="proj-card glass">
+        <p class="proj-cat">Network</p>
+        <h3>FSKM Network Design 2025</h3>
+        <p>Logical and physical network infrastructure for a new 3-storey faculty building, with diagrams and full cost estimation.</p>
+        <div class="tags"><span class="tag">Cisco Packet Tracer</span><span class="tag">Network Design</span></div>
+      </div>
+      <div class="proj-card glass">
+        <p class="proj-cat">Data</p>
+        <h3>Online Shopping System Database</h3>
+        <p>Relational database design and implementation for an e-commerce system.</p>
+        <div class="tags"><span class="tag">MySQL</span><span class="tag">phpMyAdmin</span></div>
+      </div>
     </div>
   </section>
 
   <section id="skills">
     <h2 class="section-title">Skills</h2>
     <div class="card glass">
-      <p class="placeholder-note">content lands in phase 2 — languages, frameworks, cloud &amp; tools as terminal-style chips</p>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <div class="chips">
+            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">Python</span><span class="chip">Dart</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">HTML</span><span class="chip">CSS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Frameworks</h3>
+          <div class="chips">
+            <span class="chip">Laravel</span><span class="chip">Flutter</span><span class="chip">Node.js</span><span class="chip">Yii</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Cloud &amp; Tools</h3>
+          <div class="chips">
+            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Firebase</span><span class="chip">MySQL</span><span class="chip">GitLab</span><span class="chip">Cisco Packet Tracer</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Design &amp; Productivity</h3>
+          <div class="chips">
+            <span class="chip">Adobe Photoshop</span><span class="chip">Adobe Animate</span><span class="chip">MS Visio</span><span class="chip">MS Project</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <section id="education">
     <h2 class="section-title">Education</h2>
-    <div class="card glass">
-      <p class="placeholder-note">content lands in phase 2 — UiTM degree &amp; diploma, Vice-Chancellor's Award, Dean's List badges</p>
+    <div class="edu-entry glass">
+      <div class="edu-head">
+        <h3>BSc (Hons) Netcentric Computing</h3>
+        <span class="edu-date">MAR 2024 — PRESENT</span>
+      </div>
+      <p class="inst">Universiti Teknologi MARA</p>
+      <span class="badge">CGPA 3.81</span><span class="badge">Dean's List × 4</span>
+    </div>
+    <div class="edu-entry glass">
+      <div class="edu-head">
+        <h3>Diploma in Computer Science</h3>
+        <span class="edu-date">MAR 2021 — SEP 2023</span>
+      </div>
+      <p class="inst">Universiti Teknologi MARA</p>
+      <span class="badge">CGPA 3.65</span><span class="badge">Vice-Chancellor's Award</span><span class="badge">Dean's List × 5</span>
+    </div>
+    <div class="edu-entry glass">
+      <div class="edu-head">
+        <h3>SPM</h3>
+        <span class="edu-date">2015 — 2019</span>
+      </div>
+      <p class="inst">SMKA Putrajaya</p>
+      <span class="badge">7As</span>
     </div>
   </section>
 
   <section id="contact">
     <h2 class="section-title">Contact</h2>
-    <div class="card glass">
-      <p class="placeholder-note">content lands in phase 2 — email, GitHub, languages spoken</p>
+    <div class="contact-card glass">
+      <p class="big">Let's build something</p>
+      <p class="sub">Open to opportunities in web, mobile, and cloud development.</p>
+      <div class="contact-actions">
+        <a class="btn btn-warm" href="mailto:khayreen.work@outlook.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          khayreen.work@outlook.com
+        </a>
+        <a class="btn btn-line" href="https://github.com/khayreen" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.22 19.88c.51.1.7-.22.7-.49v-1.71c-2.84.62-3.44-1.37-3.44-1.37-.46-1.18-1.13-1.5-1.13-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.39 1.11 2.98.85.09-.66.36-1.11.65-1.37-2.27-.26-4.66-1.14-4.66-5.05 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.7 0 0 .86-.28 2.8 1.05a9.73 9.73 0 0 1 5.11 0c1.95-1.33 2.8-1.05 2.8-1.05.56 1.4.21 2.44.1 2.7.65.72 1.05 1.63 1.05 2.75 0 3.92-2.39 4.78-4.67 5.04.37.32.7.94.7 1.9v2.82c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/></svg>
+          github.com/khayreen
+        </a>
+      </div>
+      <div class="langs">
+        <span><b>EN</b> Advanced</span>
+        <span><b>MY</b> Fluent</span>
+        <span><b>AR</b> Intermediate</span>
+      </div>
     </div>
   </section>
 
