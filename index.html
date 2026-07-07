@@ -362,14 +362,6 @@
     section { padding: 44px 0; }
   }
 
-  /* ============================================================
-     REDUCED MOTION
-     ============================================================ */
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .rain, .rain-2, .window-glow, .uplink i, .cursor, .dot-ok, .scene-art .girl { animation: none; }
-    .hero-links a:hover { transform: none; }
-  }
 </style>
 </head>
 <body>
@@ -564,11 +556,8 @@
 </footer>
 
 <script>
-  // Ambient HUD: cycle the Japanese status label and tick the KBPS
-  // counters. Skipped entirely under prefers-reduced-motion.
+  // Ambient HUD: cycle the Japanese status label and tick the KBPS counters.
   (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
     var labels = ['システム起動', '転送中', '同期中', '接続完了'];
     var i = 0;
     var jp = document.getElementById('jp-status');
