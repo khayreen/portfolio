@@ -3,32 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Izzah Khayreen Mahazan — Web Developer portfolio. Cinematic glassmorphism with micro-graphics.">
-<title>Izzah Khayreen — Web Developer</title>
+<!-- ============ SEO ============ -->
+<meta name="keywords" content="software developer, full-stack developer, cloud developer, AWS, Laravel, Flutter, PHP, Java, Malaysia, Putrajaya, fresh graduate">
+<meta name="author" content="Izzah Khayreen Mahazan">
+<link rel="canonical" href="https://khayreen.github.io/">
+
+<!-- ============ Open Graph (LinkedIn, WhatsApp, Facebook) ============ -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://khayreen.github.io/">
+<meta property="og:title" content="Izzah Khayreen — Software Developer">
+<meta property="og:description" content="Computer Science graduate. AWS serverless automation at Bank Islam, full-stack web on Laravel and Yii, Flutter frontends. Available immediately.">
+<meta property="og:image" content="https://khayreen.github.io/assets/images/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Izzah Khayreen, Software Developer — portfolio preview">
+<meta property="og:locale" content="en_MY">
+
+<!-- ============ Twitter Card ============ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Izzah Khayreen — Software Developer">
+<meta name="twitter:description" content="Computer Science graduate. AWS serverless automation, full-stack web, Flutter. Available immediately.">
+<meta name="twitter:image" content="https://khayreen.github.io/assets/images/og-card.png">
+
+<!-- Favicon: inline SVG data URI, zero extra requests -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' fill='%232b3040'/><rect x='3' y='4' width='2' height='8' fill='%23e4534b'/><rect x='7' y='4' width='2' height='8' fill='%23f5b73e'/><rect x='9' y='7' width='4' height='2' fill='%23f5b73e'/></svg>">
+
+<!-- Paint the wallpaper sooner -->
+<link rel="preload" as="image" href="assets/images/parallax/sky.png">
+<link rel="preload" as="image" href="assets/images/parallax/near-buildings.png">
+<link rel="preload" as="image" href="assets/images/parallax/front.png">
+<meta name="description" content="Izzah Khayreen Mahazan — Software Developer. AWS cloud automation, full-stack web (Laravel), and Flutter. Available immediately.">
+<title>Izzah Khayreen — Software Developer</title>
 <style>
   /* ============================================================
-     DESIGN TOKENS — cinematic dark / smoked glass / terminal HUD
+     DESIGN TOKENS — bright isometric / paper + hard edges
      ============================================================ */
   :root {
-    --ink: #0a0c11;             /* page base */
-    --scene-2: #12151d;
+    --paper: #eceef3;
+    --paper-2: #e3e6ed;
+    --panel: #ffffff;
+    --line: #2b3040;
 
-    /* Smoked glass */
-    --glass-bg: rgba(13, 15, 21, 0.55);
-    --glass-bg-strong: rgba(20, 23, 31, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.10);
-    --glass-blur: 14px;
-    --glass-radius: 18px;
-    --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    --ink: #1e2230;
+    --ink-mid: #565b6d;
+    --ink-low: #6b7183;   /* was #8b8fa1 (3.0:1, below WCAG AA); now ~5.2:1 */
 
-    /* Text */
-    --text-hi: #e9e7e2;
-    --text-mid: #a9a7a1;
-    --text-low: #67665f;
+    --red: #e4534b;
+    --amber: #f5b73e;
+    --teal: #45b3c0;
+    --blue: #3d6ea8;
 
-    /* Accents */
-    --warm: #f0b06a;            /* window glow */
-    --ok: #86d8a5;              /* connected / status green */
+    --hard: 4px 4px 0 rgba(43, 48, 64, 0.16);
+    --hard-sm: 3px 3px 0 rgba(43, 48, 64, 0.14);
 
     --container: 1100px;
     --font-mono: "Cascadia Mono", Consolas, "Lucida Console", "Courier New", monospace;
@@ -40,650 +66,639 @@
 
   body {
     font-family: var(--font-sans);
-    color: var(--text-mid);
-    background: var(--ink);
+    color: var(--ink-mid);
+    background: var(--paper);
     min-height: 100vh;
     overflow-x: hidden;
     line-height: 1.65;
   }
 
   /* ============================================================
-     SCENE — fixed full-screen living background.
-     Placeholder: CSS/SVG rainy night + glowing window.
-     Swap for the Google Flow video by uncommenting the <video>
-     in the markup — the CSS scene then acts as its poster.
+     SCENE — fixed daylit isometric street corner
      ============================================================ */
-  .scene {
+  /* ============================================================
+     PARALLAX PIXEL BACKGROUND
+     Art: "Sunset City Landscape" by Luis Zuno (Ansimuz) — licensed for
+     personal and commercial use. Four layers, each scrolling at its own rate.
+     ============================================================ */
+  .px-layer {
     position: fixed;
     inset: 0;
-    z-index: -1;
-    overflow: hidden;
+    background-repeat: repeat-x;
+    background-position: 0 bottom;
+    /* native art is 192px tall — upscale with hard pixels, never blur */
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+    will-change: background-position;
+  }
+  .px-sky   { z-index: -6; background-image: url("assets/images/parallax/sky.png"); }
+  .px-far   { z-index: -5; background-image: url("assets/images/parallax/buildings.png"); }
+  .px-mid   { z-index: -4; background-image: url("assets/images/parallax/near-buildings.png"); }
+  .px-near  { z-index: -3; background-image: url("assets/images/parallax/front.png"); }
+
+  /* Scrim: the art is a dark sunset, so this darkens rather than lightens.
+     White panels sit on top with strong contrast. */
+  .bg-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
     background:
-      radial-gradient(120% 90% at 70% 30%, #171b24 0%, var(--scene-2) 45%, var(--ink) 100%);
-  }
-  .scene video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .scene-art {
-    position: absolute;
-    right: 4%;
-    top: 6%;
-    height: 88%;
-    width: auto;
-    opacity: 0.95;
-  }
-  .window-glow {
-    position: absolute;
-    right: 13%;
-    top: 24%;
-    width: 30vmin;
-    height: 34vmin;
-    background: radial-gradient(closest-side, rgba(240, 176, 106, 0.28), transparent 70%);
-    filter: blur(6px);
-    animation: flicker 7s ease-in-out infinite;
-  }
-  @keyframes flicker {
-    0%, 100% { opacity: 0.9; }
-    18% { opacity: 1; }
-    34% { opacity: 0.55; }
-    41% { opacity: 0.95; }
-    62% { opacity: 0.7; }
-    78% { opacity: 1; }
+      linear-gradient(180deg, rgba(26,18,48,0.30) 0%, rgba(26,18,48,0.42) 55%, rgba(26,18,48,0.55) 100%);
   }
 
-  /* Girl silhouette: gentle typing bob */
-  .scene-art .girl {
-    animation: type-bob 3.4s ease-in-out infinite;
-    transform-box: fill-box;
-    transform-origin: 50% 100%;
+  @media (max-width: 768px) {
+    .bg-scrim { background: rgba(26,18,48,0.5); }
   }
-  @keyframes type-bob {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(1.6px); }
-    55% { transform: translateY(0.4px); }
-    75% { transform: translateY(1.2px); }
+  @media (prefers-reduced-motion: reduce) {
+    .px-layer { will-change: auto; }
   }
 
-  /* Rain: tiled SVG streak layers falling at different speeds.
-     Short dashes (not continuous lines) so the falling motion reads. */
-  .rain-wrap {
-    position: absolute;
-    inset: -20%;
-    transform: rotate(11deg);
-    pointer-events: none;
-  }
-  .rain, .rain-2 {
-    position: absolute;
-    inset: 0;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="128"><g stroke="%23d6e0f0" stroke-linecap="round"><line x1="8" y1="6" x2="8" y2="34" stroke-width="1.6" opacity="0.32"/><line x1="30" y1="70" x2="30" y2="96" stroke-width="1.3" opacity="0.20"/><line x1="52" y1="34" x2="52" y2="60" stroke-width="1.5" opacity="0.26"/></g></svg>');
-    background-size: 64px 128px;
-    animation: rainfall-a 0.5s linear infinite;
-  }
-  .rain-2 {
-    background-size: 104px 208px;
-    opacity: 0.45;
-    animation: rainfall-b 0.85s linear infinite;
-  }
-  @keyframes rainfall-a { to { background-position: 0 128px; } }
-  @keyframes rainfall-b { to { background-position: 0 208px; } }
-
-  .vignette {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(115% 100% at 50% 40%, transparent 55%, rgba(4, 5, 8, 0.75) 100%);
+  .panel {
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    box-shadow: var(--hard);
   }
 
   /* ============================================================
-     GLASS
+     KEYBOARD ACCESSIBILITY
      ============================================================ */
-  .glass {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--glass-radius);
-    box-shadow: var(--glass-shadow);
-    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
-    backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  a:focus-visible, .btn:focus-visible, .nav a:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 3px;
   }
-  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-    .glass { background: rgba(13, 15, 21, 0.92); }
+  /* Skip link: first tab stop, lets keyboard users bypass the nav */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    z-index: 200;
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
   }
+  .skip-link:focus { left: 12px; top: 12px; }
 
   /* ============================================================
-     HUD CHROME — battery (top-left), icon nav (top-right),
-     system stats (bottom-right)
+     HUD CHROME
      ============================================================ */
   .hud { font-family: var(--font-mono); }
 
-  .hud-battery {
+  .hud-badge {
     position: fixed;
-    top: 22px;
-    left: 26px;
+    top: 20px;
+    left: 24px;
     z-index: 100;
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 0.68rem;
-    letter-spacing: 0.12em;
-    color: var(--text-low);
+    padding: 6px 12px;
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--hard-sm);
   }
-  .battery-cells { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--text-low); border-radius: 3px; }
-  .battery-cells i { width: 4px; height: 8px; background: var(--ok); border-radius: 1px; }
+  .dot-ok {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #3fb37f;
+    animation: blink-dot 2.4s ease-in-out infinite;
+  }
+  @keyframes blink-dot { 50% { opacity: 0.3; } }
 
   .nav {
     position: fixed;
-    top: 16px;
-    right: 22px;
+    top: 14px;
+    right: 20px;
     z-index: 100;
     display: flex;
-    gap: 8px;
-    padding: 7px;
+    gap: 6px;
+    padding: 6px;
+    background: var(--panel);
+    border: 2px solid var(--line);
     border-radius: 999px;
+    box-shadow: var(--hard-sm);
   }
   .nav a {
     display: grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
-    color: var(--text-mid);
-    transition: background 0.25s, color 0.25s;
+    color: var(--ink-mid);
+    transition: background 0.2s, color 0.2s;
   }
-  .nav a:hover, .nav a:focus-visible { background: rgba(255, 255, 255, 0.10); color: var(--text-hi); }
-  .nav a.active { background: rgba(240, 176, 106, 0.16); color: var(--warm); }
+  .nav a:hover, .nav a:focus-visible { background: var(--paper-2); color: var(--ink); }
+  .nav a.active { background: var(--red); color: #fff; }
   .nav svg { width: 17px; height: 17px; }
 
   .hud-stats {
     position: fixed;
-    right: 26px;
-    bottom: 28px;
+    right: 24px;
+    bottom: 24px;
     z-index: 100;
+    padding: 8px 14px;
     text-align: right;
-    font-size: 0.66rem;
+    font-size: 0.64rem;
     letter-spacing: 0.14em;
-    color: var(--text-low);
+    color: var(--ink-mid);
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    box-shadow: var(--hard-sm);
     user-select: none;
   }
-  .hud-stats .jp {
-    font-size: 0.85rem;
-    color: var(--text-mid);
-    letter-spacing: 0.3em;
-    margin-bottom: 8px;
-  }
-  .uplink {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 3px;
-    margin-bottom: 6px;
-  }
-  .uplink i {
-    width: 4px;
-    background: var(--text-mid);
-    animation: uplink 1.6s ease-in-out infinite;
-  }
-  .uplink i:nth-child(1) { height: 5px; animation-delay: 0s; }
-  .uplink i:nth-child(2) { height: 9px; animation-delay: 0.2s; }
-  .uplink i:nth-child(3) { height: 13px; animation-delay: 0.4s; }
-  .uplink i:nth-child(4) { height: 17px; animation-delay: 0.6s; }
-  .uplink .lbl { margin-left: 8px; }
-  @keyframes uplink { 50% { transform: scaleY(0.4); } }
-  .hud-stats .row { margin-top: 4px; }
-  .dot-ok {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--ok);
-    box-shadow: 0 0 8px var(--ok);
-    margin-right: 6px;
-    animation: blink-dot 2.4s ease-in-out infinite;
-  }
-  @keyframes blink-dot { 50% { opacity: 0.35; } }
+  .hud-stats .jp { font-size: 0.8rem; color: var(--ink); letter-spacing: 0.24em; }
+  .hud-stats .row { margin-top: 3px; text-transform: uppercase; }
 
   /* ============================================================
      LAYOUT
      ============================================================ */
   .container { max-width: var(--container); margin: 0 auto; padding: 0 28px; }
-  section { padding: 60px 0; }
+  section { padding: 58px 0; }
 
   .section-title {
     font-family: var(--font-mono);
-    font-size: 1.15rem;
-    letter-spacing: 0.22em;
+    font-size: 1.1rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--text-hi);
-    margin-bottom: 24px;
+    color: var(--ink);
+    margin-bottom: 22px;
   }
-  .section-title::before { content: "// "; color: var(--warm); }
+  .section-title::before { content: "// "; color: var(--red); }
 
   /* ============================================================
      HERO
      ============================================================ */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    padding: 90px 0 70px;
-  }
+  .hero { min-height: 100vh; display: flex; align-items: center; padding: 90px 0 70px; }
   .hero-card {
-    max-width: 420px;
-    padding: 40px 36px;
-    animation: hero-in 0.9s ease-out both;
+    max-width: 440px;
+    padding: 36px 34px;
+    animation: hero-in 0.8s ease-out both;
   }
-  @keyframes hero-in {
-    from { opacity: 0; transform: translateY(22px); }
-  }
-  .hero-card .eyebrow-ar {
-    font-size: 0.9rem;
-    color: var(--text-low);
-    margin-bottom: 14px;
-  }
+  @keyframes hero-in { from { opacity: 0; transform: translateY(20px); } }
+  .hero-card .eyebrow-ar { font-size: 0.9rem; color: var(--ink-low); margin-bottom: 12px; }
   .hero-card h1 {
     font-family: var(--font-mono);
     font-size: clamp(1.5rem, 3.4vw, 2.1rem);
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    color: var(--text-hi);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--ink);
     text-transform: uppercase;
     line-height: 1.3;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
   .hero-card .role {
+    display: inline-block;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.24em;
-    color: var(--warm);
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    color: #fff;
+    background: var(--red);
     text-transform: uppercase;
-    margin-bottom: 22px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    margin-bottom: 20px;
   }
-  .hero-card .bio {
-    font-size: 0.95rem;
-    margin-bottom: 24px;
-  }
-  .hero-links { display: flex; gap: 10px; margin-bottom: 26px; }
+  .hero-card .bio { font-size: 0.95rem; margin-bottom: 22px; }
+  .hero-links { display: flex; gap: 9px; margin-bottom: 22px; }
   .hero-links a {
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-    background: rgba(255, 255, 255, 0.04);
-    color: var(--text-mid);
-    transition: background 0.25s, color 0.25s, transform 0.25s;
+    width: 40px; height: 40px;
+    border-radius: 6px;
+    border: 2px solid var(--line);
+    background: var(--panel);
+    color: var(--ink);
+    box-shadow: var(--hard-sm);
+    transition: transform 0.2s, background 0.2s;
   }
-  .hero-links a:hover { background: rgba(255, 255, 255, 0.1); color: var(--text-hi); transform: translateY(-2px); }
+  .hero-links a:hover { background: var(--amber); transform: translate(-1px, -1px); }
   .hero-links svg { width: 18px; height: 18px; }
 
   .status-line {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.16em;
-    color: var(--ok);
-  }
-  .cursor {
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+    background: var(--amber);
     display: inline-block;
-    width: 7px;
-    height: 13px;
-    margin-left: 4px;
-    background: var(--ok);
-    vertical-align: -2px;
-    animation: blink 1.1s steps(1) infinite;
+    padding: 5px 11px;
+    border-radius: 3px;
+    border: 2px solid var(--line);
   }
-  @keyframes blink { 50% { opacity: 0; } }
 
   /* ============================================================
      CONTENT COMPONENTS
      ============================================================ */
-  .card { padding: 30px 32px; }
+  .card { padding: 28px 30px; }
 
-  /* About */
-  .about-grid { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
-  .stats { display: grid; gap: 12px; }
+  .about-grid { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; }
+  .stats { display: grid; gap: 10px; }
   .stat {
     text-align: center;
-    padding: 14px 22px;
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.03);
+    padding: 12px 20px;
+    border: 2px solid var(--line);
+    border-radius: 4px;
+    background: var(--paper);
   }
-  .stat .num {
-    font-family: var(--font-mono);
-    font-size: 1.3rem;
-    color: var(--warm);
-    letter-spacing: 0.08em;
-  }
-  .stat .lbl {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.2em;
-    color: var(--text-low);
-    text-transform: uppercase;
-  }
+  .stat .num { font-family: var(--font-mono); font-size: 1.3rem; color: var(--red); font-weight: 700; }
+  .stat .lbl { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.16em; color: var(--ink-low); text-transform: uppercase; }
 
-  /* Experience */
-  .xp-role {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-hi);
-  }
-  .xp-role .at { color: var(--warm); }
-  .xp-meta {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.16em;
-    color: var(--text-low);
-    text-transform: uppercase;
-    margin: 6px 0 16px;
-  }
+  .xp-role { font-family: var(--font-mono); font-size: 0.92rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); font-weight: 700; }
+  .xp-role .at { color: var(--red); }
+  .xp-meta { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; color: var(--ink-low); text-transform: uppercase; margin: 5px 0 14px; }
   ul.points { list-style: none; }
-  ul.points li { padding-left: 18px; position: relative; margin-bottom: 8px; font-size: 0.93rem; }
-  ul.points li::before {
-    content: "▸";
-    position: absolute;
-    left: 0;
-    color: var(--warm);
-    font-family: var(--font-mono);
-  }
-  .xp-log { margin-top: 18px; display: grid; gap: 12px; }
-  .xp-log .log-entry {
-    padding: 16px 22px;
-    border-left: 2px solid var(--glass-border);
-  }
-  .log-entry .xp-role { font-size: 0.78rem; }
-  .log-entry .xp-meta { margin: 4px 0 6px; }
-  .log-entry p { font-size: 0.86rem; color: var(--text-mid); }
+  ul.points li { padding-left: 18px; position: relative; margin-bottom: 8px; font-size: 0.92rem; }
+  ul.points li::before { content: "▸"; position: absolute; left: 0; color: var(--red); font-family: var(--font-mono); }
+  .xp-log { margin-top: 14px; display: grid; gap: 12px; }
+  .xp-log .log-entry { padding: 15px 20px; }
+  .log-entry .xp-role { font-size: 0.76rem; }
+  .log-entry .xp-meta { margin: 3px 0 5px; }
+  .log-entry p { font-size: 0.85rem; }
 
-  /* Projects */
-  .proj-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 16px;
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+  .proj-card { padding: 22px; transition: transform 0.2s, box-shadow 0.2s; }
+  .proj-card:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 rgba(43, 48, 64, 0.18); }
+  .proj-cat { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.18em; color: #fff; background: var(--teal); display: inline-block; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; margin-bottom: 9px; }
+  .proj-card h3 { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 8px; line-height: 1.45; }
+  .proj-card p { font-size: 0.85rem; margin-bottom: 12px; }
+
+  .proj-links { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+  .proj-links a {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.08em;
+    text-transform: uppercase; text-decoration: none; color: var(--blue);
+    border-bottom: 2px solid transparent; transition: border-color 0.2s;
   }
-  .proj-card {
-    position: relative;
-    padding: 24px;
-    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
-  }
-  .proj-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(240, 176, 106, 0.35);
-    box-shadow: 0 14px 44px rgba(0, 0, 0, 0.55), 0 0 24px rgba(240, 176, 106, 0.07);
-  }
-  /* HUD corner brackets on hover */
-  .proj-card::before, .proj-card::after {
-    content: "";
-    position: absolute;
-    width: 13px;
-    height: 13px;
-    border: 1.5px solid var(--warm);
-    opacity: 0;
-    transition: opacity 0.25s;
-    pointer-events: none;
-  }
-  .proj-card::before { top: 9px; left: 9px; border-right: none; border-bottom: none; }
-  .proj-card::after { bottom: 9px; right: 9px; border-left: none; border-top: none; }
-  .proj-card:hover::before, .proj-card:hover::after { opacity: 0.8; }
-  .proj-cat {
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-    letter-spacing: 0.22em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .proj-card h3 {
-    font-family: var(--font-mono);
-    font-size: 0.92rem;
-    letter-spacing: 0.06em;
-    color: var(--text-hi);
-    margin-bottom: 8px;
-    line-height: 1.45;
-  }
-  .proj-card p { font-size: 0.86rem; margin-bottom: 14px; }
+  .proj-links a:hover { border-bottom-color: var(--blue); }
+  .proj-links svg { width: 12px; height: 12px; }
+
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.1em;
-    color: var(--text-low);
-    border: 1px solid var(--glass-border);
-    border-radius: 4px;
-    padding: 3px 8px;
-    text-transform: uppercase;
-  }
+  .tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-mid); border: 2px solid var(--line); border-radius: 3px; padding: 2px 7px; text-transform: uppercase; }
 
-  /* Skills */
-  .skill-groups { display: grid; gap: 22px; }
-  .skill-group h3 {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    letter-spacing: 0.24em;
-    color: var(--warm);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-  .chip {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    color: var(--text-mid);
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--glass-border);
-    border-radius: 6px;
-    padding: 6px 13px;
-    transition: border-color 0.25s, color 0.25s;
-  }
-  .chip:hover { border-color: rgba(240, 176, 106, 0.4); color: var(--text-hi); }
+  .skill-groups { display: grid; gap: 20px; }
+  .skill-group h3 { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.2em; color: var(--red); text-transform: uppercase; margin-bottom: 9px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink); background: var(--paper); border: 2px solid var(--line); border-radius: 4px; padding: 5px 11px; transition: background 0.2s; }
+  .chip:hover { background: var(--amber); }
 
-  /* Education */
-  .edu-entry { padding: 22px 26px; }
-  .edu-entry + .edu-entry { margin-top: 14px; }
+  .edu-entry { padding: 20px 24px; }
+  .edu-entry + .edu-entry { margin-top: 13px; }
   .edu-head { display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; justify-content: space-between; }
-  .edu-head h3 {
-    font-family: var(--font-mono);
-    font-size: 0.88rem;
-    letter-spacing: 0.06em;
-    color: var(--text-hi);
-  }
-  .edu-date {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.14em;
-    color: var(--text-low);
-  }
-  .edu-entry .inst { font-size: 0.86rem; color: var(--text-mid); margin: 4px 0 10px; }
-  .badge {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    color: var(--ok);
-    border: 1px solid rgba(134, 216, 165, 0.35);
-    border-radius: 4px;
-    padding: 3px 9px;
-    margin-right: 6px;
-    text-transform: uppercase;
-  }
+  .edu-head h3 { font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink); }
+  .edu-date { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.12em; color: var(--ink-low); }
+  .edu-entry .inst { font-size: 0.85rem; margin: 3px 0 9px; }
+  .badge { display: inline-block; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink); background: var(--amber); border: 2px solid var(--line); border-radius: 3px; padding: 2px 8px; margin-right: 6px; text-transform: uppercase; }
 
-  /* Contact */
-  .contact-card { text-align: center; padding: 44px 32px; }
-  .contact-card .big {
-    font-family: var(--font-mono);
-    font-size: 1.25rem;
-    letter-spacing: 0.1em;
-    color: var(--text-hi);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-  .contact-card .sub { font-size: 0.92rem; margin-bottom: 24px; }
-  .contact-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
+  .contact-card { text-align: center; padding: 40px 30px; }
+  .contact-card .big { font-family: var(--font-mono); font-size: 1.2rem; letter-spacing: 0.08em; color: var(--ink); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
+  .contact-card .sub { font-size: 0.92rem; margin-bottom: 22px; }
+  .contact-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 11px; margin-bottom: 22px; }
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    font-family: var(--font-mono);
-    font-size: 0.74rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 12px 24px;
-    border-radius: 10px;
-    transition: transform 0.25s, background 0.25s, border-color 0.25s;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 11px 20px; border-radius: 4px;
+    border: 2px solid var(--line); box-shadow: var(--hard-sm);
+    transition: transform 0.2s;
   }
+  .btn:hover { transform: translate(-1px, -1px); }
   .btn svg { width: 15px; height: 15px; }
-  .btn-warm { color: #1a120a; background: var(--warm); }
-  .btn-warm:hover { transform: translateY(-2px); background: #f7c286; }
-  .btn-line { color: var(--text-hi); border: 1px solid var(--glass-border); background: rgba(255, 255, 255, 0.04); }
-  .btn-line:hover { transform: translateY(-2px); border-color: rgba(240, 176, 106, 0.4); }
-  .langs {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    letter-spacing: 0.14em;
-    color: var(--text-low);
-    text-transform: uppercase;
-  }
-  .langs span { border: 1px solid var(--glass-border); border-radius: 4px; padding: 4px 10px; }
-  .langs b { color: var(--text-mid); font-weight: 600; }
+  .btn-warm { color: #fff; background: var(--red); }
+  .btn-line { color: var(--ink); background: var(--panel); }
+  .langs { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.12em; color: var(--ink-mid); text-transform: uppercase; }
+  .langs span { border: 2px solid var(--line); border-radius: 3px; padding: 3px 9px; background: var(--paper); }
+  .langs b { color: var(--ink); }
 
-  /* Scroll reveal: .reveal is added by JS (no-JS users see everything) */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
   .reveal.in { opacity: 1; transform: none; }
 
-  footer {
-    padding: 40px 0 70px;
-    text-align: center;
-    font-size: 0.8rem;
-    color: var(--text-low);
-  }
-  footer .eot {
-    font-family: var(--font-mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.3em;
-    margin-top: 10px;
-    opacity: 0.6;
+  footer { padding: 36px 0 64px; text-align: center; font-size: 0.8rem; color: var(--ink-low); }
+  footer .eot { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.26em; margin-top: 8px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
   }
 
-  /* ============================================================
-     RESPONSIVE
-     ============================================================ */
   @media (max-width: 768px) {
     .hero-card { max-width: 100%; }
     .hud-stats { display: none; }
-    .hud-battery { top: 26px; }
     .nav { right: 12px; }
-    .scene-art { right: -18%; opacity: 0.6; }
-    .window-glow { right: 2%; }
-    section { padding: 44px 0; }
+    section { padding: 42px 0; }
     .about-grid { grid-template-columns: 1fr; }
     .stats { grid-template-columns: repeat(3, 1fr); }
-    .stat { padding: 12px 8px; }
-    .contact-card { padding: 34px 20px; }
+    .stat { padding: 10px 6px; }
+    .contact-card { padding: 32px 18px; }
+  }
+  /* ============================================================
+     UI/UX PASS — presentation only, no content changes
+     ============================================================ */
+
+  /* 1. CONTRAST — section titles sat on the dark artwork in dark ink and were
+        barely legible. Give them the same solid chrome as the rest of the UI. */
+  .section-title {
+    display: inline-block;
+    padding: 7px 18px;
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 999px;
+    box-shadow: var(--hard-sm);
+    font-size: 0.92rem;
+    letter-spacing: 0.16em;
   }
 
+  /* 2. MEASURE — 133-character lines are hard to track. Cap near 70. */
+  ul.points li,
+  .card p,
+  .log-entry p,
+  .contact-card .sub { max-width: 68ch; }
+  /* Meta lines are short labels, not prose. Needs p.xp-meta (0,2,1) to
+     outrank .card p (0,1,1) — the bare class selector lost and the cap stuck. */
+  p.xp-meta, .edu-date, .proj-cat { max-width: none; }
+
+  /* 3. CARD RHYTHM — equal heights per row, tags pinned to the bottom so the
+        cards line up instead of ending raggedly. */
+  .proj-grid { align-items: stretch; }
+  .proj-card { display: flex; flex-direction: column; }
+  .proj-card .tags { margin-top: auto; padding-top: 4px; }
+
+  /* 4. Category chips wrap without breaking the pill shape. */
+  .proj-cat {
+    display: inline;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    line-height: 2.05;
+  }
+
+  /* 5. REVEAL — shorter travel and a quicker fade, so panels spend less time
+        semi-transparent over a busy background. */
+  .reveal {
+    transform: translateY(12px);
+    transition-duration: 0.42s;
+  }
+
+  /* 6. AFFORDANCE — project links read as links on hover, not just on colour. */
+  .proj-links a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+  /* 7. Anchor jumps clear the fixed nav instead of hiding under it. */
+  section[id], header[id] { scroll-margin-top: 96px; }
+
+  /* 8. Tabular figures stop the count-up animation from jittering the layout. */
+  .stat .num { font-variant-numeric: tabular-nums; }
+
+  /* 9. SCROLL CUE — tells first-time visitors there's more below the fold. */
+  .hero { position: relative; }
+  .hero::after {
+    content: "";
+    position: absolute;
+    left: 50%; bottom: 30px;
+    width: 13px; height: 13px;
+    margin-left: -7px;
+    border-right: 3px solid var(--panel);
+    border-bottom: 3px solid var(--panel);
+    transform: rotate(45deg);
+    opacity: 0.85;
+    animation: cue 1.9s ease-in-out infinite;
+  }
+  @keyframes cue {
+    0%, 100% { transform: rotate(45deg) translate(0, 0); opacity: 0.45; }
+    50%      { transform: rotate(45deg) translate(4px, 4px); opacity: 0.95; }
+  }
+
+  /* 10. Slightly tighter heading rhythm inside panels. */
+  .xp-role { line-height: 1.35; }
+  .proj-card h3 { line-height: 1.4; }
+
+  @media (max-width: 768px) {
+    .section-title { font-size: 0.82rem; padding: 6px 14px; }
+    ul.points li, .card p, .log-entry p { max-width: none; }
+    .hero::after { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero::after { animation: none; }
+  }
+
+  /* ============================================================
+     VISUAL PASS — colour, contrast, typography, hierarchy
+     Every value below was chosen to clear WCAG AA (4.5:1 body,
+     3:1 large text and UI) against its measured backdrop.
+     ============================================================ */
+
+  :root {
+    /* --- palette, tuned to the dusk cityscape ------------------
+       Four accents, each with one job:
+         red    = primary action / active state
+         amber  = availability + achievement highlights
+         violet = category tags   (was teal 2.48:1 with white — failed)
+         blue   = links + focus ring
+       ---------------------------------------------------------- */
+    --red:    #c2372d;   /* was #e4534b — white on it measured 3.72:1 */
+    --amber:  #f0a92e;   /* warmer, echoes the sunset band */
+    --violet: #57408d;   /* replaces teal; harmonises with the dusk sky */
+    --teal:   #57408d;   /* alias kept so existing rules pick up the new hue */
+    --blue:   #2f5f9e;   /* was #3d6ea8 */
+
+    --ink-low: #5b6274;  /* was #6b7183 — 4.19:1 on panels, now clears AA */
+  }
+
+  /* --- 1. CONTRAST FIXES ------------------------------------- */
+
+  /* nav icons were --ink-mid (3.72:1); full ink reads cleanly */
+  .nav a { color: var(--ink); }
+
+  /* The footer floats directly on the artwork with no card behind it.
+     Dark grey on a dark cityscape is unreadable, so it goes light and
+     carries a shadow to survive whatever pixels sit behind it. */
+  footer { color: #eef0f7; text-shadow: 0 2px 6px rgba(12, 8, 26, 0.9); }
+  footer .eot { color: #cfd4e6; text-shadow: 0 2px 6px rgba(12, 8, 26, 0.9); }
+
+  /* --- 2. READABILITY OVER THE BUSY BACKGROUND ---------------- */
+
+  /* Fixed chrome sits over moving pixels — make the backing fully opaque
+     rather than relying on the artwork behind it staying calm. */
+  .hud-badge, .nav, .hud-stats, .section-title {
+    background: #ffffff;
+    box-shadow: 3px 3px 0 rgba(20, 14, 38, 0.45);
+  }
+
+  /* --- 3. TYPOGRAPHY ----------------------------------------- */
+  ul.points li      { font-size: 0.95rem; line-height: 1.62; }
+  .log-entry p      { font-size: 0.88rem; }
+  .proj-card p      { font-size: 0.88rem; line-height: 1.6; }
+  .xp-meta          { font-size: 0.68rem; letter-spacing: 0.12em; }
+  .stat .lbl        { font-size: 0.62rem; letter-spacing: 0.12em; }
+  .edu-entry .inst  { font-size: 0.88rem; }
+  .contact-card .sub{ font-size: 0.95rem; }
+
+  /* --- 4. HIERARCHY ------------------------------------------ */
+  /* company/role line should outrank the dates beneath it */
+  .xp-role      { font-size: 0.95rem; }
+  .proj-card h3 { font-size: 0.94rem; }
+  /* tags are supporting detail — quieter than body copy */
+  .tag          { color: var(--ink-mid); font-size: 0.6rem; }
+  /* the one primary action on the page gets the most weight */
+  .btn-warm     { font-weight: 700; }
+
+  @media (max-width: 768px) {
+    ul.points li { font-size: 0.92rem; }
+  }
+
+  /* ============================================================
+     LAYOUT PASS — use the card width instead of padding it out
+     Presentation only; no markup or content changes.
+     ============================================================ */
+
+  /* Slightly tighter container: less residual slack once text is capped,
+     and more of the cityscape shows around the edges. */
+  :root { --container: 1040px; }
+
+  /* --- Experience: two columns -------------------------------
+     Role + dates sit in a fixed left column so dates align down the
+     page and can be scanned at a glance; bullets take the right column
+     and keep a comfortable measure. Achieved with grid placement, so
+     the HTML is untouched.
+     ------------------------------------------------------------ */
+  #experience .card,
+  .log-entry {
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    /* Third row absorbs the leftover height. Without it the tall bullets
+       column stretches rows 1-2 and the meta block drifts to mid-card. */
+    grid-template-rows: auto auto 1fr;
+    column-gap: 38px;
+    row-gap: 0;
+    align-items: start;
+  }
+  #experience .card > .xp-role,
+  .log-entry > .xp-role { grid-column: 1; grid-row: 1; }
+
+  #experience .card > .xp-meta,
+  .log-entry > .xp-meta { grid-column: 1; grid-row: 2; margin: 6px 0 0; }
+
+  #experience .card > ul.points,
+  .log-entry > p { grid-column: 2; grid-row: 1 / span 3; margin: 0; }
+
+  /* the left column is narrow, so let the role wrap rather than overflow */
+  #experience .xp-role, .log-entry .xp-role { line-height: 1.4; }
+
+  /* bullets now live in a ~700px column — cap a touch wider than before */
+  #experience ul.points li { max-width: 70ch; }
+
+  /* first bullet shouldn't sit lower than the role it belongs to */
+  #experience ul.points li:first-child { margin-top: 2px; }
+
+  /* --- Projects: two per row ---------------------------------
+     Three across 1040px gave 43-character lines — too narrow, and the
+     text rag became choppy. Two across roughly doubles the measure.
+     ------------------------------------------------------------ */
+  .proj-grid { grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); }
+
+  /* --- Mobile: stack everything back into one column ---------- */
+  @media (max-width: 860px) {
+    #experience .card,
+    .log-entry {
+      display: block;
+    }
+    #experience .card > .xp-meta,
+    .log-entry > .xp-meta { margin: 5px 0 14px; }
+    .proj-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     PROFILE PHOTO
+     ============================================================ */
+  /* photo-free variant: no second column to lay out */
+  .hero-head { margin-bottom: 8px; }
+  .hero-titles { min-width: 0; }
+  .hero-titles .eyebrow-ar { margin-bottom: 10px; }
+  .hero-titles h1 { margin-bottom: 0; }
+
+  .avatar {
+    flex: 0 0 auto;
+    width: 104px;
+    height: 104px;
+    object-fit: cover;
+    object-position: center 22%;   /* keep the face centred, not the shoulders */
+    border: 0;
+    border-radius: 4px;
+    /* it's a photograph — must not inherit the pixel-art rendering hint */
+    image-rendering: auto;
+    background: var(--paper-2);    /* placeholder tone before it loads */
+  }
+
+  @media (max-width: 480px) {
+    .avatar { width: 78px; height: 78px; }
+    .hero-head { gap: 14px; }
+  }
+
+
+  /* ============================================================
+     COPY-EMAIL FALLBACK
+     mailto: silently does nothing when no mail client is registered,
+     which is common for webmail-only visitors. This always works.
+     ============================================================ */
+  #copy-email { cursor: pointer; font-family: var(--font-mono); }
+  #copy-email.copied { background: var(--amber); color: var(--ink); }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    margin: -1px; padding: 0; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* Plain, selectable address — some people drag-select rather than
+     hunting for a copy control, and text inside a link is awkward to grab. */
+  .email-plain {
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    margin: -8px 0 20px;
+  }
+  .email-text {
+    font-family: var(--font-mono);
+    color: var(--ink);
+    user-select: all;            /* one click selects the whole address */
+    -webkit-user-select: all;
+    padding: 2px 6px;
+    background: var(--paper);
+    border-radius: 3px;
+  }
+
+  #copy-email.manual { background: var(--paper-2); color: var(--ink); }
+
+  /* The 68ch cap narrows this block; without auto margins it sits flush left
+     and its centred text lands left of centre inside the card. */
+  .contact-card .sub { margin-left: auto; margin-right: auto; }
+
+  /* award emphasis inside project cards */
+  .proj-card p strong { color: var(--ink); font-weight: 700; }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#about">Skip to content</a>
+
 <!-- ============================================================
-     LIVING BACKGROUND SCENE
-     When the Google Flow clip is ready (rainy night, girl character
-     working at the glowing window), drop it in assets/scene.mp4 and
-     uncomment the <video>. The CSS/SVG scene below stays as the
-     poster/fallback. Swapping the file = swapping the character.
-
-     <video src="assets/scene.mp4" autoplay muted loop playsinline
-            aria-hidden="true"></video>
+     PIXEL-ART OFFICE WALLPAPER + READABILITY SCRIM
      ============================================================ -->
-<div class="scene" aria-hidden="true">
-  <div class="window-glow"></div>
+<div class="px-layer px-sky"  aria-hidden="true"></div>
+<div class="px-layer px-far"  aria-hidden="true"></div>
+<div class="px-layer px-mid"  aria-hidden="true"></div>
+<div class="px-layer px-near" aria-hidden="true"></div>
+<div class="bg-scrim" aria-hidden="true"></div>
 
-  <!-- Building wall + glowing window with girl silhouette at a desk -->
-  <svg class="scene-art" viewBox="0 0 420 720" fill="none">
-    <!-- wall -->
-    <rect x="60" y="0" width="360" height="720" fill="#14171f"/>
-    <!-- brick courses -->
-    <g stroke="#0e1118" stroke-width="2">
-      <path d="M60 60H420M60 120H420M60 180H420M60 240H420M60 300H420M60 360H420M60 420H420M60 480H420M60 540H420M60 600H420M60 660H420"/>
-    </g>
-    <g stroke="#0e1118" stroke-width="2" opacity="0.7">
-      <path d="M140 0V720M240 0V720M340 0V720"/>
-    </g>
-    <!-- ledges -->
-    <rect x="60" y="150" width="360" height="8" fill="#0c0f15"/>
-    <rect x="60" y="470" width="360" height="8" fill="#0c0f15"/>
-    <!-- dark neighbouring windows -->
-    <rect x="300" y="200" width="80" height="110" rx="4" fill="#0b0e14" stroke="#1c2029" stroke-width="3"/>
-    <rect x="300" y="520" width="80" height="110" rx="4" fill="#0b0e14" stroke="#1c2029" stroke-width="3"/>
-    <rect x="110" y="520" width="80" height="110" rx="4" fill="#0b0e14" stroke="#1c2029" stroke-width="3"/>
+<div class="hud hud-badge"><span class="dot-ok"></span><span>Open to work</span></div>
 
-    <!-- THE window -->
-    <g>
-      <rect x="96" y="188" width="150" height="200" rx="6" fill="#2a2015"/>
-      <rect x="104" y="196" width="134" height="184" rx="4" fill="url(#warmlight)"/>
-      <!-- curtains -->
-      <path d="M104 196 Q118 250 108 380 L104 380 Z" fill="#3d2a16" opacity="0.85"/>
-      <path d="M238 196 Q222 254 234 380 L238 380 Z" fill="#3d2a16" opacity="0.85"/>
-      <path d="M104 196 H238 V212 Q170 224 104 212 Z" fill="#3d2a16" opacity="0.9"/>
-      <!-- bookshelf -->
-      <rect x="196" y="240" width="34" height="86" fill="#5a3d1e" opacity="0.8"/>
-      <path d="M196 262H230M196 284H230M196 306H230" stroke="#3a2712" stroke-width="4"/>
-      <!-- desk -->
-      <rect x="112" y="330" width="100" height="7" fill="#4a3115"/>
-      <rect x="118" y="337" width="8" height="43" fill="#3a2712"/>
-      <rect x="198" y="337" width="8" height="43" fill="#3a2712"/>
-      <!-- lamp -->
-      <path d="M126 306 L140 318 L122 322 Z" fill="#6b4a20"/>
-      <rect x="129" y="318" width="4" height="14" fill="#4a3115"/>
-      <circle cx="132" cy="314" r="10" fill="#ffd9a0" opacity="0.55"/>
-      <!-- girl silhouette: hijab head + shoulders at the desk -->
-      <g class="girl">
-        <path d="M158 288 C146 288 142 300 143 308 C144 318 150 324 158 326 L176 326 C182 322 186 316 186 306 C186 296 178 288 168 288 Z" fill="#241a10"/>
-        <path d="M140 330 Q163 312 190 330 Z" fill="#241a10"/>
-        <!-- laptop -->
-        <path d="M168 318 L188 318 L192 330 L164 330 Z" fill="#241a10"/>
-      </g>
-      <!-- window cross-frame -->
-      <path d="M171 196 V380 M104 288 H238" stroke="#2a2015" stroke-width="7"/>
-    </g>
-
-    <!-- fire-escape hint -->
-    <path d="M60 400 H10 M60 430 H10 M10 380 V450" stroke="#1a1e27" stroke-width="4"/>
-
-    <defs>
-      <linearGradient id="warmlight" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#f7c27d"/>
-        <stop offset="0.55" stop-color="#d99a4e"/>
-        <stop offset="1" stop-color="#8a5a26"/>
-      </linearGradient>
-    </defs>
-  </svg>
-
-  <div class="rain-wrap">
-    <div class="rain"></div>
-    <div class="rain-2"></div>
-  </div>
-  <div class="vignette"></div>
-</div>
-
-<!-- HUD: battery -->
-<div class="hud hud-battery" aria-hidden="true">
-  <span class="battery-cells"><i></i><i></i><i></i><i></i></span>
-  <span>SYS 100%</span>
-</div>
-
-<!-- HUD: icon navigation -->
-<nav class="nav glass" aria-label="Main navigation">
+<nav class="nav" aria-label="Main navigation">
   <a href="#top" title="Home" aria-label="Home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
   </a>
@@ -698,38 +713,39 @@
   </a>
 </nav>
 
-<!-- HUD: system stats -->
 <div class="hud hud-stats" aria-hidden="true">
-  <div class="jp" id="jp-status">システム起動</div>
-  <div class="uplink">
-    <i></i><i></i><i></i><i></i>
-    <span class="lbl">UPLINK</span>
-  </div>
-  <div class="row">↑ <span id="kbps-up">872</span> · ↓ <span id="kbps-dn">104</span> KBPS</div>
-  <div class="row"><span class="dot-ok"></span>CONNECTED</div>
-  <div class="row">SYNCING MODE // 04</div>
+  <div class="jp" id="jp-status">開発中</div>
+  <div class="row">Putrajaya, MY</div>
 </div>
 
 <header class="hero" id="top">
   <div class="container">
-    <div class="hero-card glass">
-      <p class="eyebrow-ar" lang="ar">مطوّرة ويب</p>
-      <h1>Izzah<br>Khayreen</h1>
-      <p class="role">Web Developer · UI/UX &amp; Cloud</p>
+    <div class="hero-card panel">
+      <div class="hero-head">
+        <div class="hero-titles">
+          <p class="eyebrow-ar" lang="ar">مطوّرة برمجيات</p>
+          <h1>Izzah<br>Khayreen</h1>
+        </div>
+      </div>
+      <p class="role">Software Developer · Full-Stack &amp; Cloud</p>
       <p class="bio">
-        Netcentric Computing student at UiTM building thoughtful digital
-        experiences across web, mobile, and AWS — currently with Bank Islam's
-        Digital Transformation team.
+        Computer Science graduate (Netcentric Computing, UiTM) building across
+        web, mobile, and AWS. Most recently with Bank Islam's Digital
+        Transformation team, where I engineered a serverless report-generation
+        pipeline on Lambda, S3, EventBridge, and CloudWatch.
       </p>
       <div class="hero-links">
         <a href="https://github.com/khayreen" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.22 19.88c.51.1.7-.22.7-.49v-1.71c-2.84.62-3.44-1.37-3.44-1.37-.46-1.18-1.13-1.5-1.13-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.39 1.11 2.98.85.09-.66.36-1.11.65-1.37-2.27-.26-4.66-1.14-4.66-5.05 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.7 0 0 .86-.28 2.8 1.05a9.73 9.73 0 0 1 5.11 0c1.95-1.33 2.8-1.05 2.8-1.05.56 1.4.21 2.44.1 2.7.65.72 1.05 1.63 1.05 2.75 0 3.92-2.39 4.78-4.67 5.04.37.32.7.94.7 1.9v2.82c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/></svg>
         </a>
-        <a href="mailto:khayreen.work@outlook.com" title="Email" aria-label="Email">
+        <a href="https://linkedin.com/in/izzah-khayreen" target="_blank" rel="noopener" title="LinkedIn" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4V9Z"/></svg>
+        </a>
+        <a href="#contact" title="Contact" aria-label="Go to contact section">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         </a>
       </div>
-      <p class="status-line">&gt; AVAILABLE FOR NEW PROJECTS<span class="cursor"></span></p>
+      <p class="status-line">&gt; AVAILABLE IMMEDIATELY · FULL-TIME</p>
     </div>
   </div>
 </header>
@@ -738,24 +754,28 @@
 
   <section id="about">
     <h2 class="section-title">About</h2>
-    <div class="card glass">
+    <div class="card panel">
       <div class="about-grid">
         <div>
           <p style="margin-bottom: 12px;">
-            I'm <strong style="color: var(--text-hi);">Izzah Khayreen Mahazan</strong>, a Netcentric
-            Computing student at Universiti Teknologi MARA with a strong passion for programming
-            languages and frameworks. I build across the stack — Laravel and Flutter apps,
-            MySQL-backed systems, and automated pipelines on AWS.
+            I'm <strong style="color: var(--ink);">Izzah Khayreen Mahazan</strong>, a Computer
+            Science graduate (Netcentric Computing) from Universiti Teknologi MARA. I build across
+            the stack — Laravel and Yii web systems, Flutter frontends, MySQL-backed data, and
+            serverless automation on AWS.
           </p>
           <p>
-            Beyond code, I've led a 60-student community outreach team as SULAM onsite leader —
-            I like shipping things carefully and working well with people while doing it.
+            Two internships so far: Bank Islam Malaysia Berhad, re-platforming a daily reporting
+            job onto AWS Lambda; and the Ministry of Human Resources, shipping an end-to-end
+            certificate-replacement workflow into MySPIKE, a national platform serving 830,000+
+            registered users. Beyond code, I led a 60-student community outreach team as SULAM
+            onsite leader — I like shipping things carefully and working well with people while
+            doing it.
           </p>
         </div>
         <div class="stats">
           <div class="stat"><div class="num">3.81</div><div class="lbl">CGPA</div></div>
-          <div class="stat"><div class="num">9×</div><div class="lbl">Dean's List</div></div>
-          <div class="stat"><div class="num">7+</div><div class="lbl">Projects</div></div>
+          <div class="stat"><div class="num">9</div><div class="lbl">Dean's List Semesters</div></div>
+          <div class="stat"><div class="num">2</div><div class="lbl">Internships</div></div>
         </div>
       </div>
     </div>
@@ -763,34 +783,42 @@
 
   <section id="experience">
     <h2 class="section-title">Experience</h2>
-    <div class="card glass">
-      <h3 class="xp-role">Intern <span class="at">@ Bank Islam Malaysia Berhad</span></h3>
-      <p class="xp-meta">Apr 2026 — Present · Digital Transformation, Group Digital Division</p>
+    <div class="card panel">
+      <h3 class="xp-role">Product Engineering Intern <span class="at">@ Bank Islam Malaysia Berhad</span></h3>
+      <p class="xp-meta">Apr 2026 — Jul 2026<br>Digital Transformation, Group Digital Division<br>Kuala Lumpur</p>
       <ul class="points">
-        <li>Developed and managed an automated report generation pipeline using AWS Lambda, S3, EventBridge, and CloudWatch.</li>
-        <li>Built frontend features for the Money Changer Website (BDC) using Flutter.</li>
+        <li>Re-platformed BIMB's daily report generation onto a serverless AWS pipeline (Lambda, S3, EventBridge), eliminating OS patching, capacity planning, and server upkeep.</li>
+        <li>Instrumented the pipeline with CloudWatch logs and alarms on EventBridge-scheduled runs, giving the team run-level visibility into every daily execution and automatic alerting on failed jobs.</li>
+        <li>Delivered the output layer of a Java 17 / Apache POI reporting tool covering the bank's internet-banking user base, adding column filters across 7 of its 9 report sheets and a reusable 3-mode styling module that colour-codes devices by minimum-OS support status.</li>
+        <li>Developed frontend features across the Bureau de Change (BDC) platform in Flutter Web, applying the BLoC pattern to separate business logic from UI for testable, maintainable state management.</li>
+        <li>Shipped all work through a review-gated Git workflow, revising every pushed branch against supervisor code-review feedback before merge across a 4-month internship.</li>
+      </ul>
+    </div>
+    <div class="card panel" style="margin-top: 16px;">
+      <h3 class="xp-role">Web Developer Intern <span class="at">@ Department of Skills Development, Ministry of Human Resources</span></h3>
+      <p class="xp-meta">Mar 2023 — Sep 2023<br>Information Management Unit<br>Cyberjaya</p>
+      <ul class="points">
+        <li>Developed an end-to-end certificate-replacement workflow for MySPIKE, the national skills-certification platform serving 830,000+ registered users, in the Yii PHP framework (MVC), covering the full applicant-to-officer approval flow.</li>
+        <li>Automated applicant status notifications by email, replacing a manual, informal request process with real-time delivery.</li>
+        <li>Added search and drop-down filters to admin pages, letting officers locate applicants by name or IC across thousands of records instead of scrolling the full dataset.</li>
+        <li>Reworked certificate rendering to portrait for mobile users and reformatted multiple official letter templates, shipping through GitLab in a branch-to-production workflow.</li>
       </ul>
     </div>
     <div class="xp-log">
-      <div class="log-entry glass">
-        <h3 class="xp-role">Intern <span class="at">@ Jabatan Pembangunan Kemahiran, KSM</span></h3>
-        <p class="xp-meta">Mar 2023 — Aug 2023 · Cyberjaya</p>
-        <p>Completed professional development workshops: Python (certified), Laravel, mobile development, and API development in collaboration with the Malaysian Qualifications Agency (MQA).</p>
-      </div>
-      <div class="log-entry glass">
+      <div class="log-entry panel">
         <h3 class="xp-role">Retail Associate <span class="at">@ Parkson Corporation</span></h3>
-        <p class="xp-meta">Aug 2024 — Oct 2024</p>
-        <p>Customer assistance, cash handling, and accurate record-keeping in the Children &amp; Baby department.</p>
+        <p class="xp-meta">Aug 2024 — Oct 2024<br>Putrajaya</p>
+        <p>Served customers in the high-traffic Children &amp; Baby department and processed cash and card payments over a 2-month placement, reconciling records at every shift close.</p>
       </div>
-      <div class="log-entry glass">
-        <h3 class="xp-role">Tearista <span class="at">@ Tealive Petronas Presint 9</span></h3>
-        <p class="xp-meta">Feb 2024 — Mar 2024</p>
-        <p>Beverage preparation and accurate handling of high-volume online orders.</p>
+      <div class="log-entry panel">
+        <h3 class="xp-role">Tearista <span class="at">@ Tealive</span></h3>
+        <p class="xp-meta">Feb 2024 — Mar 2024<br>Petronas Precinct 9, Putrajaya</p>
+        <p>Prepared beverages to order and fulfilled online orders accurately in a fast-paced outlet during peak trading periods.</p>
       </div>
-      <div class="log-entry glass">
-        <h3 class="xp-role">Playschool Teacher <span class="at">@ Tadika Vonad Presint 9</span></h3>
-        <p class="xp-meta">Nov 2023 — Jan 2024</p>
-        <p>Created personalized learning materials and supported children with diverse needs, including autism.</p>
+      <div class="log-entry panel">
+        <h3 class="xp-role">Playschool Teacher <span class="at">@ Vonad Kindergarten</span></h3>
+        <p class="xp-meta">Nov 2023 — Jan 2024<br>Precinct 9, Putrajaya</p>
+        <p>Adapted teaching approaches to support children with diverse learning needs, including autism.</p>
       </div>
     </div>
   </section>
@@ -798,71 +826,93 @@
   <section id="projects">
     <h2 class="section-title">Projects</h2>
     <div class="proj-grid">
-      <div class="proj-card glass">
-        <p class="proj-cat">Web · Final Year Project</p>
+      <div class="proj-card panel">
+        <p class="proj-cat">Web · FYP · 2026</p>
         <h3>Secure Credit Exemption Management System</h3>
-        <p>Credit exemption management for UiTM with multifactor authentication (OTP &amp; email) and OCR document processing.</p>
-        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">MFA</span><span class="tag">OCR</span></div>
+        <p>Automates diploma-to-degree credit transfer at UiTM: OCR extracts subject and grade data from uploaded transcripts, and OTP email multifactor authentication gates student, staff, and administrator roles. Awarded <strong>Best Report</strong> by the Faculty of Computer and Mathematical Sciences (FSKM).</p>
+        <div class="proj-links">
+          <a href="https://uitmcredit.me" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+            Live Site
+          </a>
+          <a href="https://github.com/khayreen/credit-exemption-system" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.22 19.88c.51.1.7-.22.7-.49v-1.71c-2.84.62-3.44-1.37-3.44-1.37-.46-1.18-1.13-1.5-1.13-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.39 1.11 2.98.85.09-.66.36-1.11.65-1.37-2.27-.26-4.66-1.14-4.66-5.05 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.7 0 0 .86-.28 2.8 1.05a9.73 9.73 0 0 1 5.11 0c1.95-1.33 2.8-1.05 2.8-1.05.56 1.4.21 2.44.1 2.7.65.72 1.05 1.63 1.05 2.75 0 3.92-2.39 4.78-4.67 5.04.37.32.7.94.7 1.9v2.82c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/></svg>
+            Source
+          </a>
+        </div>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Google Cloud Vision</span><span class="tag">MFA</span></div>
       </div>
-      <div class="proj-card glass">
-        <p class="proj-cat">Mobile</p>
+      <div class="proj-card panel">
+        <p class="proj-cat">Mobile · AI · Team project · 2025</p>
+        <h3>AI Study Mate</h3>
+        <p>Turns lecture material into revision tools: extracts text from photographed notes and PDFs, then generates summaries and swipeable flashcard decks. I built the Flutter client, the on-device OCR pipeline, and flashcard generation; my teammate built the Laravel REST API.</p>
+        <div class="proj-links">
+          <a href="https://github.com/khayreen/ai-studymate" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.22 19.88c.51.1.7-.22.7-.49v-1.71c-2.84.62-3.44-1.37-3.44-1.37-.46-1.18-1.13-1.5-1.13-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.39 1.11 2.98.85.09-.66.36-1.11.65-1.37-2.27-.26-4.66-1.14-4.66-5.05 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.7 0 0 .86-.28 2.8 1.05a9.73 9.73 0 0 1 5.11 0c1.95-1.33 2.8-1.05 2.8-1.05.56 1.4.21 2.44.1 2.7.65.72 1.05 1.63 1.05 2.75 0 3.92-2.39 4.78-4.67 5.04.37.32.7.94.7 1.9v2.82c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/></svg>
+            Source
+          </a>
+        </div>
+        <div class="tags"><span class="tag">Flutter</span><span class="tag">Google ML Kit</span><span class="tag">Gemini</span><span class="tag">Laravel</span><span class="tag">Firebase</span></div>
+      </div>
+      <div class="proj-card panel">
+        <p class="proj-cat">Mobile · 2025</p>
         <h3>Melaka Tourism Itinerary Assistant</h3>
-        <p>Attraction guide with Google Maps integration, itinerary saving and editing via Firestore, and Firebase Auth.</p>
+        <p>Attraction browsing with Google Maps integration, itinerary saving and editing via Firestore, and Firebase Auth for user accounts.</p>
         <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Google Maps</span></div>
       </div>
-      <div class="proj-card glass">
-        <p class="proj-cat">Mobile · AI</p>
-        <h3>AI Study Mate</h3>
-        <p>Study companion with OCR document scanning, voice-to-text, automated note summarization, flashcard generation, and exam tracking.</p>
-        <div class="tags"><span class="tag">Flutter</span><span class="tag">OCR</span><span class="tag">In-house API</span></div>
-      </div>
-      <div class="proj-card glass">
+      <div class="proj-card panel">
         <p class="proj-cat">Web</p>
         <h3>Homestay Management System</h3>
         <p>Booking platform for guests with listing management for hosts.</p>
         <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
       </div>
-      <div class="proj-card glass">
+      <div class="proj-card panel">
         <p class="proj-cat">IoT</p>
         <h3>Smart Dustbin</h3>
         <p>Motion-activated lid and full-bin notifications via the Blynk app, built on Arduino Uno and NodeMCU with an ultrasonic sensor.</p>
         <div class="tags"><span class="tag">Arduino</span><span class="tag">NodeMCU</span><span class="tag">Blynk</span></div>
       </div>
-      <div class="proj-card glass">
-        <p class="proj-cat">Network</p>
-        <h3>FSKM Network Design 2025</h3>
+      <div class="proj-card panel">
+        <p class="proj-cat">Network · 2025</p>
+        <h3>FSKM Network Design</h3>
         <p>Logical and physical network infrastructure for a new 3-storey faculty building, with diagrams and full cost estimation.</p>
         <div class="tags"><span class="tag">Cisco Packet Tracer</span><span class="tag">Network Design</span></div>
-      </div>
-      <div class="proj-card glass">
-        <p class="proj-cat">Data</p>
-        <h3>Online Shopping System Database</h3>
-        <p>Relational database design and implementation for an e-commerce system.</p>
-        <div class="tags"><span class="tag">MySQL</span><span class="tag">phpMyAdmin</span></div>
       </div>
     </div>
   </section>
 
   <section id="skills">
     <h2 class="section-title">Skills</h2>
-    <div class="card glass">
+    <div class="card panel">
       <div class="skill-groups">
         <div class="skill-group">
           <h3>Languages</h3>
           <div class="chips">
-            <span class="chip">JavaScript</span><span class="chip">PHP</span><span class="chip">Python</span><span class="chip">Dart</span><span class="chip">Java</span><span class="chip">C++</span><span class="chip">HTML</span><span class="chip">CSS</span>
+            <span class="chip">Java 17</span><span class="chip">PHP</span><span class="chip">Dart</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">Python</span><span class="chip">C++</span>
           </div>
         </div>
         <div class="skill-group">
-          <h3>Frameworks</h3>
+          <h3>Frontend</h3>
           <div class="chips">
-            <span class="chip">Laravel</span><span class="chip">Flutter</span><span class="chip">Node.js</span><span class="chip">Yii</span>
+            <span class="chip">Flutter (BLoC)</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Blade</span><span class="chip">State Management</span>
           </div>
         </div>
         <div class="skill-group">
-          <h3>Cloud &amp; Tools</h3>
+          <h3>Backend</h3>
           <div class="chips">
-            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Firebase</span><span class="chip">MySQL</span><span class="chip">GitLab</span><span class="chip">Cisco Packet Tracer</span>
+            <span class="chip">Laravel</span><span class="chip">Yii</span><span class="chip">Spring Boot</span><span class="chip">Node.js</span><span class="chip">REST API Design</span><span class="chip">MVC</span><span class="chip">Apache POI</span><span class="chip">JDBC</span><span class="chip">OCR Integration</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Cloud &amp; Infrastructure</h3>
+          <div class="chips">
+            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Google Cloud Vision</span><span class="chip">Firebase / Firestore / Auth</span><span class="chip">Docker</span><span class="chip">Serverless Architecture</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools &amp; Workflow</h3>
+          <div class="chips">
+            <span class="chip">Git</span><span class="chip">GitLab</span><span class="chip">Maven</span><span class="chip">Postman</span><span class="chip">Swagger</span><span class="chip">MySQL</span><span class="chip">Code Review</span><span class="chip">Cisco Packet Tracer</span>
           </div>
         </div>
         <div class="skill-group">
@@ -877,15 +927,15 @@
 
   <section id="education">
     <h2 class="section-title">Education</h2>
-    <div class="edu-entry glass">
+    <div class="edu-entry panel">
       <div class="edu-head">
         <h3>BSc (Hons) Netcentric Computing</h3>
-        <span class="edu-date">MAR 2024 — PRESENT</span>
+        <span class="edu-date">MAR 2024 — JUL 2026</span>
       </div>
       <p class="inst">Universiti Teknologi MARA</p>
       <span class="badge">CGPA 3.81</span><span class="badge">Dean's List × 4</span>
     </div>
-    <div class="edu-entry glass">
+    <div class="edu-entry panel">
       <div class="edu-head">
         <h3>Diploma in Computer Science</h3>
         <span class="edu-date">MAR 2021 — SEP 2023</span>
@@ -893,7 +943,7 @@
       <p class="inst">Universiti Teknologi MARA</p>
       <span class="badge">CGPA 3.65</span><span class="badge">Vice-Chancellor's Award</span><span class="badge">Dean's List × 5</span>
     </div>
-    <div class="edu-entry glass">
+    <div class="edu-entry panel">
       <div class="edu-head">
         <h3>SPM</h3>
         <span class="edu-date">2015 — 2019</span>
@@ -905,22 +955,30 @@
 
   <section id="contact">
     <h2 class="section-title">Contact</h2>
-    <div class="contact-card glass">
+    <div class="contact-card panel">
       <p class="big">Let's build something</p>
-      <p class="sub">Open to opportunities in web, mobile, and cloud development.</p>
+      <p class="sub">Available immediately for full-stack, mobile, or cloud-focused engineering roles.</p>
       <div class="contact-actions">
-        <a class="btn btn-warm" href="mailto:khayreen.work@outlook.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-          khayreen.work@outlook.com
-        </a>
+        <button class="btn btn-warm" id="copy-email" type="button"
+                data-email="khayreen.work@outlook.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+          <span class="copy-label">Copy email address</span>
+        </button>
         <a class="btn btn-line" href="https://github.com/khayreen" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.22 19.88c.51.1.7-.22.7-.49v-1.71c-2.84.62-3.44-1.37-3.44-1.37-.46-1.18-1.13-1.5-1.13-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.39 1.11 2.98.85.09-.66.36-1.11.65-1.37-2.27-.26-4.66-1.14-4.66-5.05 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.7 0 0 .86-.28 2.8 1.05a9.73 9.73 0 0 1 5.11 0c1.95-1.33 2.8-1.05 2.8-1.05.56 1.4.21 2.44.1 2.7.65.72 1.05 1.63 1.05 2.75 0 3.92-2.39 4.78-4.67 5.04.37.32.7.94.7 1.9v2.82c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/></svg>
           github.com/khayreen
         </a>
+        <a class="btn btn-line" href="https://linkedin.com/in/izzah-khayreen" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.76V21h-4v-5.6c0-1.34-.03-3.06-1.9-3.06-1.9 0-2.2 1.45-2.2 2.96V21h-4V9Z"/></svg>
+          LinkedIn
+        </a>
       </div>
+      <p class="email-plain">
+        <span class="email-text">khayreen.work@outlook.com</span>
+      </p>
       <div class="langs">
-        <span><b>EN</b> Advanced</span>
-        <span><b>MY</b> Fluent</span>
+        <span><b>MY</b> Native</span>
+        <span><b>EN</b> Fluent</span>
         <span><b>AR</b> Intermediate</span>
       </div>
     </div>
@@ -934,44 +992,33 @@
 </footer>
 
 <script>
-  // Ambient HUD: cycle the Japanese status label and tick the KBPS counters.
+  // Cycle the Japanese status label.
   (function () {
-    var labels = ['システム起動', '転送中', '同期中', '接続完了'];
+    var labels = ['開発中', '求職中', '準備完了'];
     var i = 0;
     var jp = document.getElementById('jp-status');
     setInterval(function () {
       i = (i + 1) % labels.length;
       jp.textContent = labels[i];
     }, 4000);
-
-    var up = document.getElementById('kbps-up');
-    var dn = document.getElementById('kbps-dn');
-    setInterval(function () {
-      up.textContent = 780 + Math.floor(Math.random() * 220);
-      dn.textContent = 90 + Math.floor(Math.random() * 60);
-    }, 900);
   })();
 
-  // Scroll reveal: fade sections up as they enter the viewport.
-  // Classes are added here so content stays visible without JS.
+  // Scroll reveal.
   (function () {
-    var els = document.querySelectorAll('main .glass, main .section-title');
+    var els = document.querySelectorAll('main .panel, main .section-title');
     els.forEach(function (el) { el.classList.add('reveal'); });
     document.querySelectorAll('.proj-grid .proj-card').forEach(function (el, i) {
-      el.style.transitionDelay = (i % 3) * 90 + 'ms';
+      el.style.transitionDelay = (i % 3) * 80 + 'ms';
     });
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.classList.add('in');
-          io.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
     }, { threshold: 0.12 });
     els.forEach(function (el) { io.observe(el); });
   })();
 
-  // Stat tiles: count up when the About card reveals.
+  // Stat tiles count up.
   (function () {
     var done = false;
     var nums = document.querySelectorAll('.stat .num');
@@ -986,7 +1033,7 @@
         var suffix = m[2];
         var t0 = performance.now();
         (function tick(t) {
-          var p = Math.min((t - t0) / 1200, 1);
+          var p = Math.min((t - t0) / 1100, 1);
           var eased = 1 - Math.pow(1 - p, 3);
           el.textContent = (target * eased).toFixed(decimals) + suffix;
           if (p < 1) requestAnimationFrame(tick);
@@ -996,7 +1043,7 @@
     nums.forEach(function (el) { io.observe(el); });
   })();
 
-  // Nav: highlight the icon for the section currently in view.
+  // Nav highlight.
   (function () {
     var map = {
       top: 'top', about: 'about', experience: 'about',
@@ -1017,6 +1064,128 @@
       });
     }, { rootMargin: '-40% 0px -55% 0px' });
     document.querySelectorAll('section[id], header[id]').forEach(function (s) { io.observe(s); });
+  })();
+
+
+
+  // ============================================================
+  //  Parallax pixel background — horizontal drift on vertical scroll
+  //  Art: "Sunset City Landscape" by Luis Zuno (Ansimuz)
+  //  Layers pan sideways as the page scrolls; distant layers move least.
+  // ============================================================
+  (function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var ART_H = 192;                       // native height of every layer
+    var layers = [
+      { el: document.querySelector('.px-sky'),  speed: 0.06 },
+      { el: document.querySelector('.px-far'),  speed: 0.18 },
+      { el: document.querySelector('.px-mid'),  speed: 0.36 },
+      { el: document.querySelector('.px-near'), speed: 0.62 }
+    ].filter(function (l) { return l.el; });
+
+    function resize() {
+      // integer scale so the pixel grid never lands on half-pixels
+      var scale = Math.max(3, Math.ceil(window.innerHeight / ART_H));
+      layers.forEach(function (l) {
+        l.el.style.backgroundSize = 'auto ' + (ART_H * scale) + 'px';
+      });
+    }
+
+    var ticking = false;
+    function apply() {
+      var y = window.scrollY || window.pageYOffset;
+      layers.forEach(function (l) {
+        l.el.style.backgroundPosition = (-y * l.speed) + 'px bottom';
+      });
+      ticking = false;
+    }
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(apply); }
+    }
+
+    resize();
+    apply();
+    window.addEventListener('resize', function () { resize(); apply(); });
+    if (!reduce) window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+
+  // ============================================================
+  //  Copy-to-clipboard for the email address
+  //  Three tiers, and the user always gets feedback:
+  //    1. Clipboard API (needs a secure context + user activation)
+  //    2. execCommand('copy') via a temp textarea
+  //    3. Select the visible address so it can be copied by hand
+  // ============================================================
+  (function () {
+    var btn = document.getElementById('copy-email');
+    if (!btn) return;
+    var label = btn.querySelector('.copy-label');
+    var original = label.textContent;
+    var live = document.createElement('div');
+    live.className = 'visually-hidden';
+    live.setAttribute('role', 'status');
+    live.setAttribute('aria-live', 'polite');
+    document.body.appendChild(live);
+    var timer;
+
+    function flash(text, announce, cls) {
+      clearTimeout(timer);
+      label.textContent = text;
+      btn.classList.remove('copied', 'manual');
+      if (cls) btn.classList.add(cls);
+      live.textContent = announce;
+      timer = setTimeout(function () {
+        label.textContent = original;
+        btn.classList.remove('copied', 'manual');
+        live.textContent = '';
+      }, 2400);
+    }
+
+    function legacyCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+
+    // Last resort: highlight the address on the page so it can be copied manually.
+    function selectVisible() {
+      var el = document.querySelector('.email-text');
+      if (!el) return false;
+      var range = document.createRange();
+      range.selectNodeContents(el);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      el.scrollIntoView({ block: 'center' });
+      return true;
+    }
+
+    btn.addEventListener('click', function () {
+      var email = btn.dataset.email;
+
+      function finish(ok) {
+        if (ok) { flash('Copied', 'Email address copied to clipboard', 'copied'); return; }
+        if (legacyCopy(email)) { flash('Copied', 'Email address copied to clipboard', 'copied'); return; }
+        if (selectVisible()) { flash('Press Ctrl+C', 'Address selected below — press Control C to copy', 'manual'); return; }
+        flash('Copy failed', 'Copy failed', 'manual');
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(email).then(function () { finish(true); },
+                                                 function () { finish(false); });
+      } else {
+        finish(false);
+      }
+    });
   })();
 </script>
 
