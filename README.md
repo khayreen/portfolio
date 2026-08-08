@@ -4,7 +4,7 @@ Personal portfolio site. Software developer, Computer Science graduate (Netcentr
 Computing, UiTM). Available immediately for full-stack, mobile, or cloud-focused
 engineering roles.
 
-**Live:** _(add the URL once deployed)_
+**Live:** https://khayreenmahazan.netlify.app
 
 ---
 
