@@ -43,6 +43,10 @@
     --paper-2: #e3e6ed;
     --panel: #ffffff;
     --line: #2b3040;
+    --rule: #e0e3ec;     /* light divider — for separating rows, not for
+                            outlining elements, where --line still applies */
+    --amber-soft: #fbe7b0;  /* pale fill for badges; full --amber is for
+                               small accents, not repeated blocks */
 
     --ink: #1e2230;
     --ink-mid: #565b6d;
@@ -202,6 +206,39 @@
   .nav a.active { background: var(--red); color: #fff; }
   .nav svg { width: 17px; height: 17px; }
 
+  /* Seven unlabelled icons are a guessing game, and the native title
+     tooltip is both slow to appear and unstyled. This shows the name
+     instantly on hover or keyboard focus, in the page's own idiom. */
+  .nav a { position: relative; }
+  .nav a::after {
+    content: attr(data-label);
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 3px 8px;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: var(--panel);
+    border: 2px solid var(--line);
+    border-radius: 3px;
+    box-shadow: var(--hard-sm);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+  /* The last icon sits against the viewport edge, so its label is
+     right-aligned instead of centred to stop it running off-screen. */
+  .nav a:last-child::after { left: auto; right: 0; transform: none; }
+  .nav a:hover::after, .nav a:focus-visible::after { opacity: 1; }
+  /* Touch devices emulate hover as a sticky state after tapping, which
+     would leave a label stranded on screen after navigating. */
+  @media (hover: none) { .nav a::after { display: none; } }
+
   .hud-stats {
     position: fixed;
     right: 24px;
@@ -331,6 +368,10 @@
   .proj-card { padding: 22px; transition: transform 0.2s, box-shadow 0.2s; }
   .proj-card:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 rgba(43, 48, 64, 0.18); }
   .proj-cat { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.18em; color: #fff; background: var(--teal); display: inline-block; padding: 3px 8px; border-radius: 3px; text-transform: uppercase; margin-bottom: 9px; }
+  /* Awards need their own channel: bold already means "technical keyword"
+     inside the prose, so an accolade in bold reads as just another one.
+     Amber is the palette's achievement colour; dark ink on it clears AA. */
+  .proj-award { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; color: #2b3040; background: var(--amber); display: inline-block; padding: 5px 11px; border: 2px solid var(--ink); border-radius: 3px; box-shadow: 3px 3px 0 rgba(43, 48, 64, 0.22); text-transform: uppercase; margin: 2px 0 13px; font-weight: 700; }
   .proj-card h3 { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 8px; line-height: 1.45; }
   .proj-card p { font-size: 0.85rem; margin-bottom: 12px; }
 
@@ -347,8 +388,22 @@
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .tag { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--ink-mid); border: 2px solid var(--line); border-radius: 3px; padding: 2px 7px; text-transform: uppercase; }
 
-  .skill-groups { display: grid; gap: 20px; }
-  .skill-group h3 { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.2em; color: var(--red); text-transform: uppercase; margin-bottom: 9px; }
+  /* Skills read as a two-column table: category on the left, chips on the
+     right. Nine stacked label-over-chips blocks made the eye restart at
+     every group; a fixed label column gives one vertical scan line, and
+     the rules between rows keep long chip runs from bleeding together. */
+  .skill-groups { display: grid; gap: 0; }
+  .skill-group {
+    display: grid;
+    grid-template-columns: 134px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: 14px 0;
+    border-top: 1px solid var(--rule);
+  }
+  .skill-group:first-child { border-top: 0; padding-top: 0; }
+  .skill-group:last-child { padding-bottom: 0; }
+  .skill-group h3 { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.2em; color: var(--red); text-transform: uppercase; margin-bottom: 0; padding-top: 6px; line-height: 1.45; }
   .chips { display: flex; flex-wrap: wrap; gap: 7px; }
   .chip { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink); background: var(--paper); border: 2px solid var(--line); border-radius: 4px; padding: 5px 11px; transition: background 0.2s; }
   .chip:hover { background: var(--amber); }
@@ -359,7 +414,16 @@
   .edu-head h3 { font-family: var(--font-mono); font-size: 0.86rem; color: var(--ink); }
   .edu-date { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.12em; color: var(--ink-low); }
   .edu-entry .inst { font-size: 0.85rem; margin: 3px 0 9px; }
-  .badge { display: inline-block; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; color: var(--ink); background: var(--amber); border: 2px solid var(--line); border-radius: 3px; padding: 2px 8px; margin-right: 6px; text-transform: uppercase; }
+  /* These are achievements, so they should read as such. The old 0.6rem
+     uppercase mono with 0.1em tracking was the hard case for legibility:
+     tiny, no word shapes, letters pushed apart. Bigger and bolder, with
+     tracking pulled back in and a hard shadow so they sit above the card
+     rather than flat on it. */
+  /* Achievements: bigger and bolder than the original 0.6rem, but on a
+     soft butter fill rather than full-strength amber, which was glaring
+     at this size and repeated three times to a row. Dark ink on it still
+     measures far past AA. */
+  .badge { display: inline-block; font-family: var(--font-mono); font-size: 0.76rem; font-weight: 700; letter-spacing: 0.05em; color: var(--ink); background: var(--amber-soft); border: 2px solid var(--line); border-radius: 3px; padding: 5px 11px; margin: 0 8px 8px 0; text-transform: uppercase; box-shadow: 2px 2px 0 rgba(43, 48, 64, 0.2); }
 
   .contact-card { text-align: center; padding: 40px 30px; }
   .contact-card .big { font-family: var(--font-mono); font-size: 1.2rem; letter-spacing: 0.08em; color: var(--ink); text-transform: uppercase; margin-bottom: 8px; font-weight: 700; }
@@ -400,6 +464,10 @@
     .stats { grid-template-columns: repeat(3, 1fr); }
     .stat { padding: 10px 6px; }
     .contact-card { padding: 32px 18px; }
+    /* A 134px label column leaves too little room for chips on a phone,
+       so the category goes back above its row. */
+    .skill-group { grid-template-columns: 1fr; gap: 9px; padding: 13px 0; }
+    .skill-group h3 { padding-top: 0; }
   }
   /* ============================================================
      UI/UX PASS — presentation only, no content changes
@@ -640,6 +708,12 @@
   @media (max-width: 480px) {
     .avatar { width: 78px; height: 78px; }
     .hero-head { gap: 14px; }
+    /* Seven targets no longer fit a narrow phone at full size; shrink the
+       pill rather than let it run past the right edge. 30px still clears
+       the 24px minimum touch target with the surrounding padding. */
+    .nav { gap: 2px; padding: 4px; }
+    .nav a { width: 30px; height: 30px; }
+    .nav svg { width: 15px; height: 15px; }
   }
 
 
@@ -699,16 +773,25 @@
 <div class="hud hud-badge"><span class="dot-ok"></span><span>Open to work</span></div>
 
 <nav class="nav" aria-label="Main navigation">
-  <a href="#top" title="Home" aria-label="Home">
+  <a href="#top" data-label="Home" aria-label="Home">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>
   </a>
-  <a href="#about" title="About" aria-label="About">
+  <a href="#about" data-label="About" aria-label="About">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
   </a>
-  <a href="#projects" title="Projects" aria-label="Projects">
+  <a href="#experience" data-label="Experience" aria-label="Experience">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>
+  </a>
+  <a href="#projects" data-label="Projects" aria-label="Projects">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
   </a>
-  <a href="#contact" title="Contact" aria-label="Contact">
+  <a href="#skills" data-label="Skills" aria-label="Skills">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.3 6.1L20.5 11l-6.2 1.9L12 19l-2.3-6.1L3.5 11l6.2-1.9z"/></svg>
+  </a>
+  <a href="#education" data-label="Education" aria-label="Education">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11.2V16c0 1.2 2.5 2.4 5.5 2.4s5.5-1.2 5.5-2.4v-4.8"/></svg>
+  </a>
+  <a href="#contact" data-label="Contact" aria-label="Contact">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
   </a>
 </nav>
@@ -789,7 +872,7 @@
       <ul class="points">
         <li>Re-platformed BIMB's daily report generation onto a serverless AWS pipeline (Lambda, S3, EventBridge), eliminating OS patching, capacity planning, and server upkeep.</li>
         <li>Instrumented the pipeline with CloudWatch logs and alarms on EventBridge-scheduled runs, giving the team run-level visibility into every daily execution and automatic alerting on failed jobs.</li>
-        <li>Delivered the output layer of a Java 17 / Apache POI reporting tool covering the bank's internet-banking user base, adding column filters across 7 of its 9 report sheets and a reusable 3-mode styling module that colour-codes devices by minimum-OS support status.</li>
+        <li>Built the output layer of a Java / Apache POI reporting tool for the bank's internet-banking user base, adding column filtering and a reusable styling module that colour-codes devices by minimum-OS support status.</li>
         <li>Developed frontend features across the Bureau de Change (BDC) platform in Flutter Web, applying the BLoC pattern to separate business logic from UI for testable, maintainable state management.</li>
         <li>Shipped all work through a review-gated Git workflow, revising every pushed branch against supervisor code-review feedback before merge across a 4-month internship.</li>
       </ul>
@@ -828,8 +911,9 @@
     <div class="proj-grid">
       <div class="proj-card panel">
         <p class="proj-cat">Web · FYP · 2026</p>
-        <h3>Secure Credit Exemption Management System</h3>
-        <p>Automates diploma-to-degree credit transfer at UiTM: OCR extracts subject and grade data from uploaded transcripts, and OTP email multifactor authentication gates student, staff, and administrator roles. Awarded <strong>Best Report</strong> by the Faculty of Computer and Mathematical Sciences (FSKM).</p>
+        <h3>Secure UiTM Credit Exemption Management System Using Optical Character Recognition and Multifactor Authentication</h3>
+        <div><span class="proj-award">★ Best Report Award · FSKM</span></div>
+        <p>Automates diploma-to-degree credit transfer at UiTM. <strong>OCR</strong> extracts subjects, grades and credit hours from uploaded transcripts, parsing the file directly when the PDF is digital and passing it to <strong>Google Cloud Vision</strong> when it is scanned. Since subject titles are rarely identical across institutions, course equivalency is scored by a weighted three-algorithm service combining <strong>Levenshtein distance, Jaccard index</strong> and similar-text percentage. Seven user roles sit behind RBAC middleware, <strong>TOTP</strong> two-factor authentication and <strong>SHA-256</strong> document signatures.</p>
         <div class="proj-links">
           <a href="https://uitmcredit.me" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
@@ -840,12 +924,12 @@
             Source
           </a>
         </div>
-        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Google Cloud Vision</span><span class="tag">MFA</span></div>
+        <div class="tags"><span class="tag">Laravel</span><span class="tag">MySQL</span><span class="tag">Google Cloud Vision</span><span class="tag">OCR</span><span class="tag">Levenshtein</span><span class="tag">MFA</span></div>
       </div>
       <div class="proj-card panel">
         <p class="proj-cat">Mobile · AI · 2025</p>
         <h3>AI Study Mate</h3>
-        <p>Turns lecture material into revision tools. Students photograph handwritten notes or upload a PDF, the app extracts the text on-device, then generates summaries and a swipeable flashcard deck for revision.</p>
+        <p><strong>Flutter</strong> app that turns lecture material into revision tools. <strong>Google ML Kit</strong> runs on-device OCR so a photographed textbook page becomes editable note text, recorded audio is transcribed through the <strong>Gemini</strong> API, and any note can then be condensed into a summary or expanded into question-and-answer flashcard decks. Study plans and exam dates are served by a <strong>Laravel</strong> REST API over MySQL, while notes and generated decks persist in Cloud Firestore, keeping relational records separate from unstructured content.</p>
         <div class="proj-links">
           <a href="https://github.com/khayreen/ai-studymate" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.8a10.2 10.2 0 0 0-3.22 19.88c.51.1.7-.22.7-.49v-1.71c-2.84.62-3.44-1.37-3.44-1.37-.46-1.18-1.13-1.5-1.13-1.5-.93-.63.07-.62.07-.62 1.03.07 1.57 1.06 1.57 1.06.91 1.57 2.39 1.11 2.98.85.09-.66.36-1.11.65-1.37-2.27-.26-4.66-1.14-4.66-5.05 0-1.12.4-2.03 1.05-2.75-.1-.26-.46-1.3.1-2.7 0 0 .86-.28 2.8 1.05a9.73 9.73 0 0 1 5.11 0c1.95-1.33 2.8-1.05 2.8-1.05.56 1.4.21 2.44.1 2.7.65.72 1.05 1.63 1.05 2.75 0 3.92-2.39 4.78-4.67 5.04.37.32.7.94.7 1.9v2.82c0 .27.18.6.7.49A10.2 10.2 0 0 0 12 1.8Z"/></svg>
@@ -857,25 +941,25 @@
       <div class="proj-card panel">
         <p class="proj-cat">Mobile · 2025</p>
         <h3>Melaka Tourism Itinerary Assistant</h3>
-        <p>Attraction browsing with Google Maps integration, itinerary saving and editing via Firestore, and Firebase Auth for user accounts.</p>
+        <p>Day-by-day trip planner for tourists visiting Melaka. Itineraries are scheduled by time slot across multiple days, and a day-route view plots every stop selected for a given day onto a single <strong>Google Maps</strong> view, enabling travellers to group nearby attractions and minimise transit time. Built in <strong>Flutter</strong> with <strong>Firebase</strong> Authentication and Cloud Firestore.</p>
         <div class="tags"><span class="tag">Flutter</span><span class="tag">Firebase</span><span class="tag">Google Maps</span></div>
       </div>
       <div class="proj-card panel">
-        <p class="proj-cat">Web</p>
+        <p class="proj-cat">Web · 2025</p>
         <h3>Homestay Management System</h3>
-        <p>A local homestay with two houses had no website of its own, so we built one: it showcases both properties and lets guests check availability and book online.</p>
+        <p>Web presence for a homestay whose only prior listing was a Beacons.ai link page. The public site presents room types, rates, a photo gallery and stay policies covering check-in, payment and cancellation, while a parallel administrative interface allows the owner to revise that content directly, so routine updates require no developer involvement.</p>
         <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
       </div>
       <div class="proj-card panel">
-        <p class="proj-cat">IoT</p>
+        <p class="proj-cat">IoT · 2025</p>
         <h3>Smart Dustbin</h3>
-        <p>Motion-activated lid and full-bin notifications via the Blynk app, built on Arduino Uno and NodeMCU with an ultrasonic sensor.</p>
+        <p>Contactless campus bin built on <strong>Arduino Uno</strong>. Two ultrasonic sensors take separate roles: one opens the servo-driven lid when a user comes within 50 cm, the other measures the distance to the waste surface to gauge how full the bin is. A <strong>NodeMCU</strong> ESP12E then pushes alerts to the <strong>Blynk</strong> app, so bins are emptied according to actual fill rate rather than on a fixed collection round.</p>
         <div class="tags"><span class="tag">Arduino</span><span class="tag">NodeMCU</span><span class="tag">Blynk</span></div>
       </div>
       <div class="proj-card panel">
         <p class="proj-cat">Network · 2025</p>
         <h3>FSKM Network Design</h3>
-        <p>Logical and physical network infrastructure for a new 3-storey faculty building, with diagrams and full cost estimation.</p>
+        <p>Three-storey faculty building with 7 computer labs, 30 staff offices and roughly 200 endpoints. Traffic is segmented into 12 <strong>VLANs</strong> sized by <strong>VLSM</strong> against each area's actual host count, with separate DMZ, internal-server and management segments, redundant uplinks between Layer 3 core and Layer 2 access switches, and access-point placement guided by a Wi-Fi heat-map survey. Delivered with logical and physical diagrams, a structured cabling plan and a costed bill of materials.</p>
         <div class="tags"><span class="tag">Cisco Packet Tracer</span><span class="tag">Network Design</span></div>
       </div>
     </div>
@@ -888,7 +972,7 @@
         <div class="skill-group">
           <h3>Languages</h3>
           <div class="chips">
-            <span class="chip">Java 17</span><span class="chip">PHP</span><span class="chip">Dart</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">Python</span><span class="chip">C++</span>
+            <span class="chip">Java</span><span class="chip">PHP</span><span class="chip">Dart</span><span class="chip">SQL</span><span class="chip">JavaScript</span><span class="chip">Python</span><span class="chip">C++</span>
           </div>
         </div>
         <div class="skill-group">
@@ -900,19 +984,37 @@
         <div class="skill-group">
           <h3>Backend</h3>
           <div class="chips">
-            <span class="chip">Laravel</span><span class="chip">Yii</span><span class="chip">Spring Boot</span><span class="chip">Node.js</span><span class="chip">REST API Design</span><span class="chip">MVC</span><span class="chip">Apache POI</span><span class="chip">JDBC</span><span class="chip">OCR Integration</span>
+            <span class="chip">Laravel</span><span class="chip">Yii</span><span class="chip">Spring Boot</span><span class="chip">Node.js</span><span class="chip">REST API Design</span><span class="chip">MVC</span><span class="chip">Apache POI</span><span class="chip">JDBC</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>AI &amp; Machine Learning</h3>
+          <div class="chips">
+            <span class="chip">Gemini API</span><span class="chip">Google ML Kit</span><span class="chip">Google Cloud Vision</span><span class="chip">OCR Integration</span><span class="chip">Text Similarity Algorithms</span>
           </div>
         </div>
         <div class="skill-group">
           <h3>Cloud &amp; Infrastructure</h3>
           <div class="chips">
-            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Google Cloud Vision</span><span class="chip">Firebase / Firestore / Auth</span><span class="chip">Docker</span><span class="chip">Serverless Architecture</span>
+            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Firebase / Firestore / Auth</span><span class="chip">Google Maps API</span><span class="chip">Docker</span><span class="chip">Serverless Architecture</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>Security</h3>
+          <div class="chips">
+            <span class="chip">Multifactor Authentication (TOTP)</span><span class="chip">Role-Based Access Control</span><span class="chip">SHA-256 Digital Signatures</span><span class="chip">Audit Logging</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <h3>IoT &amp; Networking</h3>
+          <div class="chips">
+            <span class="chip">Arduino</span><span class="chip">NodeMCU</span><span class="chip">Cisco Packet Tracer</span><span class="chip">VLAN / VLSM Subnetting</span>
           </div>
         </div>
         <div class="skill-group">
           <h3>Tools &amp; Workflow</h3>
           <div class="chips">
-            <span class="chip">Git</span><span class="chip">GitLab</span><span class="chip">Maven</span><span class="chip">Postman</span><span class="chip">Swagger</span><span class="chip">MySQL</span><span class="chip">Code Review</span><span class="chip">Cisco Packet Tracer</span>
+            <span class="chip">Git</span><span class="chip">GitLab</span><span class="chip">Maven</span><span class="chip">Postman</span><span class="chip">Swagger</span><span class="chip">MySQL</span>
           </div>
         </div>
         <div class="skill-group">
@@ -1046,8 +1148,8 @@
   // Nav highlight.
   (function () {
     var map = {
-      top: 'top', about: 'about', experience: 'about',
-      projects: 'projects', skills: 'projects', education: 'projects',
+      top: 'top', about: 'about', experience: 'experience',
+      projects: 'projects', skills: 'skills', education: 'education',
       contact: 'contact'
     };
     var links = {};
