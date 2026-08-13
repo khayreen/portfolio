@@ -371,7 +371,10 @@
   /* Awards need their own channel: bold already means "technical keyword"
      inside the prose, so an accolade in bold reads as just another one.
      Amber is the palette's achievement colour; dark ink on it clears AA. */
-  .proj-award { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; color: #2b3040; background: var(--amber); display: inline-block; padding: 5px 11px; border: 2px solid var(--ink); border-radius: 3px; box-shadow: 3px 3px 0 rgba(43, 48, 64, 0.22); text-transform: uppercase; margin: 2px 0 13px; font-weight: 700; }
+  .proj-award { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; color: #2b3040; background: var(--amber-soft); display: inline-block; padding: 5px 11px; border: 2px solid var(--ink); border-radius: 3px; box-shadow: 3px 3px 0 rgba(43, 48, 64, 0.22); text-transform: uppercase; margin: 2px 0 13px; font-weight: 700; }
+  .proj-award-wrap { text-align: center; }
+  .proj-award { text-align: center; }
+  .proj-award-sub { display: block; font-size: 0.58rem; letter-spacing: 0.04em; margin-top: 4px; line-height: 1.35; }
   .proj-card h3 { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.04em; color: var(--ink); margin-bottom: 8px; line-height: 1.45; }
   .proj-card p { font-size: 0.85rem; margin-bottom: 12px; }
 
@@ -755,6 +758,7 @@
 
   /* award emphasis inside project cards */
   .proj-card p strong { color: var(--ink); font-weight: 700; }
+
 </style>
 </head>
 <body>
@@ -870,21 +874,22 @@
       <h3 class="xp-role">Product Engineering Intern <span class="at">@ Bank Islam Malaysia Berhad</span></h3>
       <p class="xp-meta">Apr 2026 — Jul 2026<br>Digital Transformation, Group Digital Division<br>Kuala Lumpur</p>
       <ul class="points">
-        <li>Re-platformed BIMB's daily report generation onto a serverless AWS pipeline (Lambda, S3, EventBridge), eliminating OS patching, capacity planning, and server upkeep.</li>
-        <li>Instrumented the pipeline with CloudWatch logs and alarms on EventBridge-scheduled runs, giving the team run-level visibility into every daily execution and automatic alerting on failed jobs.</li>
-        <li>Built the output layer of a Java / Apache POI reporting tool for the bank's internet-banking user base, adding column filtering and a reusable styling module that colour-codes devices by minimum-OS support status.</li>
-        <li>Developed frontend features across the Bureau de Change (BDC) platform in Flutter Web, applying the BLoC pattern to separate business logic from UI for testable, maintainable state management.</li>
-        <li>Shipped all work through a review-gated Git workflow, revising every pushed branch against supervisor code-review feedback before merge across a 4-month internship.</li>
+        <li>Rebuilt BIMB's daily regulatory reporting on a serverless AWS stack (Lambda, EventBridge, RDS, Secrets Manager, S3), retiring a server-bound batch job along with the OS patching, capacity planning and server upkeep it required.</li>
+        <li>Designed the report engine in Java 17 and Spring Boot around a job-name registry, so a new report can be added without touching the pipeline. A single artifact promotes across development, SIT, UAT and production, reads source data in batches of 50 to stay within the Lambda memory budget, and delivers over SFTP with an automatic retry and an S3 backup.</li>
+        <li>Secured the pipeline end to end: credentials resolved at runtime from AWS Secrets Manager, a least-privilege IAM role, and the database isolated inside a private VPC, with CloudWatch logging every execution for traceability.</li>
+        <li>Delivered the reporting output layer in Java and Apache POI, producing a 9-sheet minimum-OS device workbook with AutoFilter across 7 status sheets and a shared 12-style formatting module that colour-codes devices by support status.</li>
+        <li>Shipped three modules on the Bureau de Change platform in Flutter Web with flutter_bloc: staff enable/disable over a listing filterable on five dimensions, an Import Staff flow that turns an uploaded Excel file into a validated, editable preview and re-imports only the rows that failed, and a Cash In submodule built as a four-screen stepper supporting internal and external transfers.</li>
+        <li>Worked to a review-gated Git workflow, absorbing 16 rounds of supervisor code review across error handling, widget reuse, service-layer separation and screen architecture before merge.</li>
       </ul>
     </div>
     <div class="card panel" style="margin-top: 16px;">
       <h3 class="xp-role">Web Developer Intern <span class="at">@ Department of Skills Development, Ministry of Human Resources</span></h3>
       <p class="xp-meta">Mar 2023 — Sep 2023<br>Information Management Unit<br>Cyberjaya</p>
       <ul class="points">
-        <li>Developed an end-to-end certificate-replacement workflow for MySPIKE, the national skills-certification platform serving 830,000+ registered users, in the Yii PHP framework (MVC), covering the full applicant-to-officer approval flow.</li>
-        <li>Automated applicant status notifications by email, replacing a manual, informal request process with real-time delivery.</li>
-        <li>Added search and drop-down filters to admin pages, letting officers locate applicants by name or IC across thousands of records instead of scrolling the full dataset.</li>
-        <li>Reworked certificate rendering to portrait for mobile users and reformatted multiple official letter templates, shipping through GitLab in a branch-to-production workflow.</li>
+        <li>Built an end-to-end certificate-replacement workflow for MySPIKE, the Ministry's national skills-certification platform serving 830,000+ registered users, in the Yii PHP framework on an MVC structure, covering the full journey from applicant submission to officer approval.</li>
+        <li>Automated applicant status notifications by email, replacing an informal manual process so applicants learn where their application stands without contacting an officer.</li>
+        <li>Added search and drop-down filtering to the administrative pages, letting officers retrieve an applicant by name or IC number across thousands of records rather than scrolling the full dataset.</li>
+        <li>Reworked certificate rendering to portrait orientation for mobile users and reformatted several official letter templates, shipping each change through GitLab on a branch-to-production workflow.</li>
       </ul>
     </div>
     <div class="xp-log">
@@ -912,8 +917,8 @@
       <div class="proj-card panel">
         <p class="proj-cat">Web · FYP · 2026</p>
         <h3>Secure UiTM Credit Exemption Management System Using Optical Character Recognition and Multifactor Authentication</h3>
-        <div><span class="proj-award">★ Best Report Award · FSKM</span></div>
-        <p>Automates diploma-to-degree credit transfer at UiTM. <strong>OCR</strong> extracts subjects, grades and credit hours from uploaded transcripts, parsing the file directly when the PDF is digital and passing it to <strong>Google Cloud Vision</strong> when it is scanned. Since subject titles are rarely identical across institutions, course equivalency is scored by a weighted three-algorithm service combining <strong>Levenshtein distance, Jaccard index</strong> and similar-text percentage. Seven user roles sit behind RBAC middleware, <strong>TOTP</strong> two-factor authentication and <strong>SHA-256</strong> document signatures.</p>
+        <div class="proj-award-wrap"><span class="proj-award">★ Best Report Award<span class="proj-award-sub">Faculty of Computer Science and Mathematics (FSKM)</span></span></div>
+        <p>Automates diploma-to-degree credit transfer at UiTM. <strong>OCR</strong> extracts subjects, grades and credit hours from uploaded transcripts, parsing the file directly when the PDF is digital and passing it to <strong>Google Cloud Vision</strong> when it is scanned. Since subject titles are rarely identical across institutions, course equivalency is scored by a weighted three-algorithm service combining Levenshtein distance, Jaccard index and similar-text percentage. Seven user roles sit behind RBAC middleware, <strong>TOTP</strong> two-factor authentication and <strong>SHA-256</strong> document signatures.</p>
         <div class="proj-links">
           <a href="https://uitmcredit.me" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
@@ -947,19 +952,19 @@
       <div class="proj-card panel">
         <p class="proj-cat">Web · 2025</p>
         <h3>Homestay Management System</h3>
-        <p>Web presence for a homestay whose only prior listing was a Beacons.ai link page. The public site presents room types, rates, a photo gallery and stay policies covering check-in, payment and cancellation, while a parallel administrative interface allows the owner to revise that content directly, so routine updates require no developer involvement.</p>
-        <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span></div>
+        <p>Web presence for a homestay whose only prior listing was a Beacons.ai link page. The public site presents the homestay's two houses with their rates, a photo gallery and stay policies covering check-in, payment and cancellation, while a parallel administrative interface allows the owner to revise that content directly, so routine updates require no developer involvement.</p>
+        <div class="tags"><span class="tag">JavaScript</span><span class="tag">HTML/CSS</span></div>
       </div>
       <div class="proj-card panel">
         <p class="proj-cat">IoT · 2025</p>
         <h3>Smart Dustbin</h3>
-        <p>Contactless campus bin built on <strong>Arduino Uno</strong>. Two ultrasonic sensors take separate roles: one opens the servo-driven lid when a user comes within 50 cm, the other measures the distance to the waste surface to gauge how full the bin is. A <strong>NodeMCU</strong> ESP12E then pushes alerts to the <strong>Blynk</strong> app, so bins are emptied according to actual fill rate rather than on a fixed collection round.</p>
-        <div class="tags"><span class="tag">Arduino</span><span class="tag">NodeMCU</span><span class="tag">Blynk</span></div>
+        <p>Contactless campus bin built on <strong>Arduino Uno</strong>. Two ultrasonic sensors take separate roles: one opens the servo-driven lid when a user comes within 50 cm, the other measures the distance to the waste surface to gauge how full the bin is. A NodeMCU ESP12E then pushes alerts to the <strong>Blynk</strong> app, so bins are emptied according to actual fill rate rather than on a fixed collection round.</p>
+        <div class="tags"><span class="tag">Arduino</span><span class="tag">Blynk</span></div>
       </div>
       <div class="proj-card panel">
         <p class="proj-cat">Network · 2025</p>
         <h3>FSKM Network Design</h3>
-        <p>Three-storey faculty building with 7 computer labs, 30 staff offices and roughly 200 endpoints. Traffic is segmented into 12 <strong>VLANs</strong> sized by <strong>VLSM</strong> against each area's actual host count, with separate DMZ, internal-server and management segments, redundant uplinks between Layer 3 core and Layer 2 access switches, and access-point placement guided by a Wi-Fi heat-map survey. Delivered with logical and physical diagrams, a structured cabling plan and a costed bill of materials.</p>
+        <p>Three-storey faculty building with 7 computer labs, 30 staff offices and roughly 200 endpoints. Traffic is segmented into 12 VLANs sized by VLSM against each area's actual host count, with separate DMZ, internal-server and management segments, redundant uplinks between Layer 3 core and Layer 2 access switches, and access-point placement guided by a Wi-Fi heat-map survey. Delivered with logical and physical diagrams, a structured cabling plan and a costed bill of materials.</p>
         <div class="tags"><span class="tag">Cisco Packet Tracer</span><span class="tag">Network Design</span></div>
       </div>
     </div>
@@ -978,7 +983,7 @@
         <div class="skill-group">
           <h3>Frontend</h3>
           <div class="chips">
-            <span class="chip">Flutter (BLoC)</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Blade</span><span class="chip">State Management</span>
+            <span class="chip">Flutter (BLoC)</span><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Blade</span><span class="chip">State Management</span><span class="chip">Google Maps API</span>
           </div>
         </div>
         <div class="skill-group">
@@ -996,7 +1001,7 @@
         <div class="skill-group">
           <h3>Cloud &amp; Infrastructure</h3>
           <div class="chips">
-            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Firebase / Firestore / Auth</span><span class="chip">Google Maps API</span><span class="chip">Docker</span><span class="chip">Serverless Architecture</span>
+            <span class="chip">AWS Lambda</span><span class="chip">AWS S3</span><span class="chip">EventBridge</span><span class="chip">CloudWatch</span><span class="chip">Firebase / Firestore / Auth</span><span class="chip">Docker</span><span class="chip">Serverless Architecture</span>
           </div>
         </div>
         <div class="skill-group">
@@ -1006,15 +1011,21 @@
           </div>
         </div>
         <div class="skill-group">
+          <h3>Testing &amp; QA</h3>
+          <div class="chips">
+            <span class="chip">Functional Testing</span><span class="chip">Usability Testing</span><span class="chip">Security Testing</span><span class="chip">Test Case Design</span>
+          </div>
+        </div>
+        <div class="skill-group">
           <h3>IoT &amp; Networking</h3>
           <div class="chips">
-            <span class="chip">Arduino</span><span class="chip">NodeMCU</span><span class="chip">Cisco Packet Tracer</span><span class="chip">VLAN / VLSM Subnetting</span>
+            <span class="chip">Arduino</span><span class="chip">Cisco Packet Tracer</span><span class="chip">VLAN / VLSM Subnetting</span>
           </div>
         </div>
         <div class="skill-group">
           <h3>Tools &amp; Workflow</h3>
           <div class="chips">
-            <span class="chip">Git</span><span class="chip">GitLab</span><span class="chip">Maven</span><span class="chip">Postman</span><span class="chip">Swagger</span><span class="chip">MySQL</span>
+            <span class="chip">Git</span><span class="chip">GitLab</span><span class="chip">Maven</span><span class="chip">Postman</span><span class="chip">Swagger</span><span class="chip">MySQL</span><span class="chip">SDLC (Waterfall)</span>
           </div>
         </div>
         <div class="skill-group">
