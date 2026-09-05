@@ -351,6 +351,8 @@
   }
   .stat .num { font-family: var(--font-mono); font-size: 1.3rem; color: var(--red); font-weight: 700; }
   .stat .lbl { font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.16em; color: var(--ink-low); text-transform: uppercase; }
+  /* Secondary fact under a stat label: the Dean's List count that earned the award. */
+  .stat .lbl-sub { display: block; text-transform: none; letter-spacing: 0.03em; font-size: 0.56rem; margin-top: 4px; opacity: 0.78; }
 
   .xp-role { font-family: var(--font-mono); font-size: 0.92rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); font-weight: 700; }
   .xp-role .at { color: var(--red); }
@@ -816,7 +818,8 @@
       </div>
       <p class="role">Software Developer · Full-Stack &amp; Cloud</p>
       <p class="bio">
-        Computer Science graduate (Netcentric Computing, UiTM) building across
+        Computer Science graduate (Netcentric Computing, UiTM) and Vice-Chancellor's
+        Award recipient, building across
         web, mobile, and AWS. Most recently with Bank Islam's Digital
         Transformation team, where I engineered a serverless report-generation
         pipeline on Lambda, S3, EventBridge, and CloudWatch.
@@ -861,7 +864,7 @@
         </div>
         <div class="stats">
           <div class="stat"><div class="num">3.81</div><div class="lbl">CGPA</div></div>
-          <div class="stat"><div class="num">10</div><div class="lbl">Dean's List Semesters</div></div>
+          <div class="stat"><div class="num">2</div><div class="lbl">Vice-Chancellor's Awards<span class="lbl-sub">10 Dean's List semesters</span></div></div>
           <div class="stat"><div class="num">2</div><div class="lbl">Internships</div></div>
         </div>
       </div>
